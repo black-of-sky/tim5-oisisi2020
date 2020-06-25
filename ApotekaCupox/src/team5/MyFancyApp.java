@@ -4,7 +4,7 @@ import team5.view.MainFrame;
 
 public class MyFancyApp {
 	public static void main(String[] args) {
-		MainFrame mf=new MainFrame();
+		MainFrame mf= MainFrame.getInstance();
 		mf.setSize(800,600);
 		mf.setVisible(true);
 	}

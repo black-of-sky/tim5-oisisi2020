@@ -1,23 +1,30 @@
 package team5.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class LandingView extends JPanel {
-	private Image background;
+	private Image background,icon;
 
 	public LandingView() {
 		try {
 			background = ImageIO.read(new File("./resources/img/landing.png"));
+			icon = ImageIO.read(new File("./resources/icon/login.png"));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -29,7 +36,7 @@ public class LandingView extends JPanel {
 		c.weighty = 1;
 		c.weightx = 1;
 		c.anchor=GridBagConstraints.CENTER;
-		c.fill=GridBagConstraints.BOTH;
+		c.fill=GridBagConstraints.NONE;
 		for(int i=0;i<20;i++) {
 			c.gridx++;
 			c.gridy++;
@@ -37,9 +44,24 @@ public class LandingView extends JPanel {
 		}
 		c.gridy=16;
 		c.gridx=7;
-		add(new JButton("LET ME INNNN"),c);
+		//add(new JButton("LET ME INNNN"),c);
 		
-		
+		JButton jb=new JButton();
+		jb.setBackground(new Color(0,0,0,0));
+		jb.setBorder(null);
+		jb.setPreferredSize(new Dimension(144,42));
+		jb.setMargin(new Insets(0,0,0,0));
+		jb.setContentAreaFilled(false);
+		jb.setIcon(new ImageIcon(icon));
+		add(jb,c);
+		jb.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO connect with login from controller
+				
+			}
+		});
 	}
 
 	@Override
