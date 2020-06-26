@@ -1,25 +1,23 @@
 package team5.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.Border;
 
 import team5.controller.Event;
-import team5.view.tables.UsersTable;
+import team5.model.Medicine;
+import team5.model.User;
+import team5.view.tables.TableFactory;
 
 public class MainFrame extends JFrame {
 	private static MainFrame instance;
 
 	private MainFrame() {
-		setLayout(new BorderLayout());
-		getContentPane().add(new LandingView(PanelType.LANDING),BorderLayout.CENTER);
-		// add(new JScrollPane(new UsersTable()));
+		//setLayout(new BorderLayout());
+		//getContentPane().add(new LandingView(PanelType.LANDING),BorderLayout.CENTER);
+		 add(new JScrollPane(TableFactory.getTable(User.class)));
+		 //add(new JScrollPane(TableFactory.getTable(Medicine.class)));
 		
 	}
 

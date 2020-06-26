@@ -13,28 +13,20 @@ import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
-import team5.view.tables.models.UserAbstractTableModel;
-
-public class UsersTable extends JTable {
+public class GenericTable extends JTable {
 
 	private static final long serialVersionUID = 8900651367165240112L;
 
-	public UsersTable() {
+	public GenericTable() {
 		this.setRowSelectionAllowed(true);
 		this.setColumnSelectionAllowed(false);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.setModel(new UserAbstractTableModel());
-		// new ButtonColumnIgraci(this, 4);
 		setRowHeight(40);
-		// setShowHorizontalLines(false);
-		// setShowVerticalLines(false);
-		// setGridColor( new Color(182,64,14));
 		setShowGrid(false);
 		setIntercellSpacing(new Dimension(0, 0));
-		getTableHeader().setBackground(new Color(182, 64, 14));
-		getTableHeader().setForeground(new Color(255, 255, 255));
-
-
+		getTableHeader().setBackground( new Color(182, 64, 14));
+		getTableHeader().setForeground( new Color(255, 255, 255));
+		getTableHeader().setDefaultRenderer(new MyCoolTableHeaderRenderer(this));
 	}
 
 	@Override
@@ -44,17 +36,34 @@ public class UsersTable extends JTable {
 
 		c.setBorder(border);
 		if (isRowSelected(row)) {
-			c.setBackground(Color.LIGHT_GRAY);
+			c.setBackground(new Color(255,255,204));
 		} else {
 			if ((column + 1) % 2 != 0) {
 				c.setBackground(new Color(250, 210, 181));
 			} else {
 				c.setBackground(new Color(250, 139, 104));
 			}
-			// c.setBackground(Color.WHITE);
+			
 		}
 		return c;
 	}
-
 	
+	private class MyCoolTableHeaderRenderer implements TableCellRenderer {
+
+		DefaultTableCellRenderer renderer;
+
+		public MyCoolTableHeaderRenderer(JTable table) {
+			renderer = (DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer();
+			renderer.setHorizontalAlignment(JLabel.CENTER);
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int col) {
+			Component c = renderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+			return new JLabel(new ImageIcon("./resources/icon/login.png"));
+			//return c;
+		}
+
+	}
 }
