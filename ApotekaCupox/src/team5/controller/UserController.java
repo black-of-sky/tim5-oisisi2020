@@ -5,6 +5,11 @@ import team5.model.User;
 import team5.view.MainFrame;
 
 public class UserController {
+	private static UserController instance;
+
+	private UserController() {
+
+	}
 
 	public boolean login(String usernamee, String password) {
 		Context context = Context.getInstance();
@@ -27,6 +32,17 @@ public class UserController {
 	public void logout() {
 		Context.getInstance().setLogged(null);
 		MainFrame.getInstance().processEvent(Event.LOGGED_OUT, null);
+	}
+
+	public static UserController getInstance() {
+		if(instance==null)
+			instance=new UserController();
+		return instance;
+	}
+
+	public void loginButtonPressed() {
+		MainFrame.getInstance().processEvent(Event.LOGIN_PRESSED, null);
+		
 	}
 
 }
