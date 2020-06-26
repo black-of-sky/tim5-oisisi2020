@@ -2,10 +2,10 @@ package team5.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -14,10 +14,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.sound.midi.ControllerEventListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -27,21 +25,22 @@ import team5.controller.UserController;
 
 public class LandingView extends JPanel {
 	private Image background, icon;
-	
+
 	public LandingView(PanelType type) {
 		try {
-			File f=null;
+			File f = null;
 			switch (type) {
 			case LANDING:
-				f=new File("./resources/img/landing.png");
+				f = new File("./resources/img/landing.png");
+				icon = ImageIO.read(new File("./resources/icon/login.png"));
 				break;
 
 			default:
-				f=new File("./resources/img/loginView.png");;
+				f = new File("./resources/img/loginView.png");
+				icon = ImageIO.read(new File("./resources/icon/login2.png"));
 			}
-			
+
 			background = ImageIO.read(f);
-			icon = ImageIO.read(new File("./resources/icon/login.png"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -60,7 +59,7 @@ public class LandingView extends JPanel {
 			c.gridy++;
 			add(javax.swing.Box.createGlue(), c);
 		}
-		
+
 		// add(new JButton("LET ME INNNN"),c);
 		if (type == PanelType.LANDING) {
 			c.gridy = 16;
@@ -69,37 +68,88 @@ public class LandingView extends JPanel {
 			displayButton(c);
 		} else {
 			c.gridy = 10;
-			c.gridheight=2;
-			c.gridwidth=4;
+			c.gridheight = 2;
+			c.gridwidth = 4;
 			c.fill = GridBagConstraints.BOTH;
 			c.gridx = 2;
 			displayLoginForm(c);
 		}
 	}
+
 	private void displayLoginForm(GridBagConstraints c) {
 
 		JLabel usernameLabel = new JLabel("Korisnicko ime:");
 		JTextField usernameField = new JTextField();
-        
-        JLabel passLabel= new JLabel("Lozinka :");
-        JPasswordField passField = new JPasswordField();
+		usernameField.setPreferredSize(new Dimension(150, 30));
+		JLabel passLabel = new JLabel("Lozinka :");
+		JPasswordField passField = new JPasswordField();
+		passField.setPreferredSize(new Dimension(150, 30));
 
- 
-        JButton login = new JButton("Uloguj se");
-        JPanel panel = new JPanel(new GridLayout(3, 2,20,10));
+		JPanel panel = new JPanel(new GridBagLayout());
+		GridBagConstraints c2 = new GridBagConstraints();
+		c2.gridx = 0;
+		c2.anchor = GridBagConstraints.BASELINE_LEADING;
+		c2.gridy = 0;
+		c2.weighty = 1;
+		c2.weightx = 1;
+		// c2.anchor = GridBagConstraints.CENTER;
 
-        panel.add(usernameLabel);
-        panel.add(usernameField);
-        panel.add(passLabel);
-        panel.add(passField);
-        JLabel error = new JLabel();
-        error.setForeground(new Color(255,0,0));
-        panel.add(error);
-        panel.add(login);
-        panel.setBackground(new Color(0,0,0,0));
+		panel.add(usernameLabel, c2);
+		c2.gridx = 1;
+
+		// TODO Srediti boje i font
+		panel.add(usernameField, c2);
+		passLabel.setFont(new Font("arial", Font.BOLD, 25));
+		usernameLabel.setFont(new Font("arial", Font.BOLD, 25));
+		usernameLabel.setForeground(new Color(118, 190, 189));
+		passLabel.setForeground(new Color(118, 190, 189));
+		c2.gridx = 0;
+		c2.gridy = 1;
+		// c.fill = GridBagConstraints.BOTH;
+		panel.add(passLabel, c2);
+		c2.gridx = 1;
+		c2.gridy = 1;
+
+		// c.fill = GridBagConstraints.BOTH;
+		panel.add(passField, c2);
+		JLabel error = new JLabel("");
+		error.setForeground(new Color(255, 0, 0));
+		error.setFont(new Font("arial", Font.BOLD, 18));
+		error.setBackground(new Color(0, 0, 0, 0));
+
+		c2.gridx = 0;
+
+		c2.gridy = 2;
+		c2.anchor = GridBagConstraints.WEST;
+		panel.add(error, c2);
+
+		JButton jb = new JButton();
+		jb.setBackground(new Color(255, 210, 181));// iz nekog razloga ne radi lepo kad je providno, tako da stavljam
+													// boju pozzdine
+		jb.setBorder(null);
+
+		jb.setMargin(new Insets(0, 0, 0, 0));
+		c2.anchor = GridBagConstraints.BASELINE_LEADING;
+		jb.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!UserController.getInstance().login(usernameField.getText().trim(), passField.getText())) {
+					error.setText("Pogresni kredencijali");
+					MainFrame.getInstance().repaint();
+				}
+			}
+		});
+
+		jb.setIcon(new ImageIcon(icon));
+		c2.gridx = 1;
+		c2.gridy = 2;
+		panel.add(jb, c2);
+		panel.setBackground(new Color(0, 0, 0, 0));
 		add(panel, c);
 
 	}
+
 	private void displayButton(GridBagConstraints c) {
 		JButton jb = new JButton();
 		jb.setBackground(new Color(0, 0, 0, 0));
@@ -114,6 +164,7 @@ public class LandingView extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				UserController.getInstance().loginButtonPressed();
+
 			}
 		});
 	}

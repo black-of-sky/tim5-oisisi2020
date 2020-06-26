@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
 		setLayout(new BorderLayout());
 		getContentPane().add(new LandingView(PanelType.LANDING),BorderLayout.CENTER);
 		// add(new JScrollPane(new UsersTable()));
-
+		
 	}
 
 	public static MainFrame getInstance() {
@@ -30,12 +30,24 @@ public class MainFrame extends JFrame {
 	}
 
 	public void processEvent(Event e, Object o) {
-		if (e == Event.LOGIN_PRESSED) {
+		switch (e) {
+		case LOGIN_PRESSED:
 			getContentPane().removeAll();
 			getContentPane().add(new LandingView(PanelType.LOGIN),BorderLayout.CENTER);
 			revalidate();		
 			repaint();
+			break;
+		case LOOGED_IN:
+			getContentPane().removeAll();
+			revalidate();		
+			repaint();
+			break;
+		case SHUT_DOWN:
+			System.exit(1);
+			break;
+		default:
+			break;
 		}
-
+		
 	}
 }

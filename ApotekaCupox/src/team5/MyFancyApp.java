@@ -7,5 +7,6 @@ public class MyFancyApp {
 		MainFrame mf= MainFrame.getInstance();
 		mf.setSize(800,600);
 		mf.setVisible(true);
+		mf.setDefaultCloseOperation(MainFrame.EXIT_ON_CLOSE);
 	}
 }
