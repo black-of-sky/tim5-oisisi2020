@@ -14,10 +14,11 @@ public class MainFrame extends JFrame {
 	private static MainFrame instance;
 
 	private MainFrame() {
-		//setLayout(new BorderLayout());
-		//getContentPane().add(new LandingView(PanelType.LANDING),BorderLayout.CENTER);
-		 add(new JScrollPane(TableFactory.getTable(User.class)));
+		setLayout(new BorderLayout());
+		getContentPane().add(new LandingView(PanelType.LANDING),BorderLayout.CENTER);
+		 //add(new JScrollPane(TableFactory.getTable(User.class)));
 		 //add(new JScrollPane(TableFactory.getTable(Medicine.class)));
+		//add(new MainView(),BorderLayout.CENTER);
 		
 	}
 
@@ -37,12 +38,20 @@ public class MainFrame extends JFrame {
 			break;
 		case LOOGED_IN:
 			getContentPane().removeAll();
+			add(new MainView(),BorderLayout.CENTER);
 			revalidate();		
 			repaint();
 			break;
 		case SHUT_DOWN:
 			System.exit(1);
 			break;
+		case LOGGED_OUT:
+			getContentPane().removeAll();
+			getContentPane().add(new LandingView(PanelType.LANDING),BorderLayout.CENTER);
+			revalidate();		
+			repaint();
+			
+	
 		default:
 			break;
 		}
