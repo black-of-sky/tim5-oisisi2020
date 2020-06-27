@@ -2,8 +2,7 @@ package team5.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,81 +12,62 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 
-import team5.controller.UserController;
 import team5.model.User;
-import team5.view.tables.TableFactory;
+import team5.view.tables.TableFactory;;
 
 public class MainView extends JPanel {
-	
+
 	public MainView() {
-	//	setLayout(new GridBagLayout());
-		JPanel toolbar=new JPanel();
+		// setLayout(new GridBagLayout());
+		JPanel toolbar = new Toolbar();// JPanel();
 		setLayout(new BorderLayout());
-		GridBagConstraints c=new GridBagConstraints();
-		c.weightx=c.weighty=1;
-		for (int i = 0; i < 10; i++) {
-			c.gridx++;
-			c.gridy++;
-	//		add(javax.swing.Box.createGlue(), c);
-		}
-
-
-		toolbar.setBackground(new Color(255,20,48));
-		
-		JButton b=new JButton("logout");
-		toolbar.add(b);
-		
-		b.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				UserController.getInstance().logout();
-				
-			}
-		});
-		
-		JButton ab=new JButton("reg");
+		JButton ab = new JButton("reg");
 		toolbar.add(ab);
-	ab.addActionListener(new ActionListener() {
-			
+		ab.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new AddUser().setVisible(true);
-				
+
 			}
 		});
-		
-		
-		c.fill=GridBagConstraints.BOTH;
-		
-		c.gridx=c.gridy=0;
-		c.gridheight=3;
-		c.gridwidth=10;
-	//	add(toolbar,c);
-		   
-		
-		c.gridx=0;
-		c.gridy=3;
-		c.gridheight=7;
-		JPanel tableview=new JPanel();
-		tableview.setBackground(new Color(5,20,48));
+		JPanel tableview = new JPanel();
 		tableview.setLayout(new BorderLayout());
-		tableview.setBorder(new EmptyBorder(10, 10, 10, 10));
-
+		JPanel bottom = new JPanel();
+		bottom.setLayout(new BorderLayout());
+		bottom.setBackground(new Color(255, 210, 181));
+		bottom.setLayout(new BorderLayout());
+		bottom.setBorder(new EmptyBorder(25, 25, 0, 25));
 		tableview.add((new JScrollPane(TableFactory.getTable(User.class))));
-		//add(tableview,c);
-		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-                toolbar, tableview);
-		splitPane.setDividerSize(0);
-		
-		int h=(MainFrame.getInstance().getHeight());
-		System.out.println(h);
+		tableview.setBorder(new EmptyBorder(0, 15, 15, 0));
+		tableview.setBackground(new Color(255,254,223));
+		JSplitPane splitPane=createSplitPane(toolbar, bottom, 0.1, 100, JSplitPane.VERTICAL_SPLIT);
+
+		JPanel tableTitle = new JPanel();
+		tableTitle.setBackground(new Color(255,254,223));
+
+		JSplitPane tableSplit = createSplitPane(tableTitle, tableview, 0.1, 85, JSplitPane.VERTICAL_SPLIT);
 	
-	
+
+		JPanel sidebar = new JPanel();
+		sidebar.setBackground(new Color(255,254,223));
+		JSplitPane splitPaneinner = createSplitPane(tableSplit, sidebar, 0.95, 570, JSplitPane.HORIZONTAL_SPLIT);
+
+		bottom.add(splitPaneinner);
+
 		add(splitPane);
-		splitPane.setDividerLocation(120);
-		splitPane.setResizeWeight(0.1);
-        splitPane.setEnabled(false);
+		
+	}
+
+	private JSplitPane createSplitPane(Component up, Component down, double weight, int location, int orientation) {
+		JSplitPane sp = new JSplitPane(orientation, up, down);
+		sp.setDividerLocation(location);
+		sp.setResizeWeight(weight);
+		sp.setEnabled(false);
+		sp.setDividerSize(0);
+		sp.setBorder(null);
+		return sp;
+
 	}
 
 }

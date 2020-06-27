@@ -10,6 +10,8 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,10 +23,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import team5.Utils;
 import team5.controller.UserController;
 
 public class LandingView extends JPanel {
-	private Image background, icon;
+	private Image background;
+	private ImageIcon icon, iconHover;
 
 	public LandingView(PanelType type) {
 		try {
@@ -32,12 +36,14 @@ public class LandingView extends JPanel {
 			switch (type) {
 			case LANDING:
 				f = new File("./resources/img/landing.png");
-				icon = ImageIO.read(new File("./resources/icon/login.png"));
+				icon = new ImageIcon(ImageIO.read(new File("./resources/icon/login.png")));
+				iconHover = new ImageIcon(ImageIO.read(new File("./resources/icon/login_hover.png")));
 				break;
 
 			default:
 				f = new File("./resources/img/loginView.png");
-				icon = ImageIO.read(new File("./resources/icon/login2.png"));
+				icon = new ImageIcon(ImageIO.read(new File("./resources/icon/login2.png")));
+				iconHover = new ImageIcon(ImageIO.read(new File("./resources/icon/login2_hover.png")));
 			}
 
 			background = ImageIO.read(f);
@@ -124,11 +130,12 @@ public class LandingView extends JPanel {
 		panel.add(error, c2);
 
 		JButton jb = new JButton();
-		jb.setBackground(new Color(255, 210, 181));// iz nekog razloga ne radi lepo kad je providno, tako da stavljam
-													// boju pozzdine
 		jb.setBorder(null);
 
 		jb.setMargin(new Insets(0, 0, 0, 0));
+		jb.setBackground(new Color(255, 210, 181));// iz nekog razloga ne radi lepo kad je providno, tako da stavljam
+													// boju pozzdine
+		
 		c2.anchor = GridBagConstraints.BASELINE_LEADING;
 		jb.addActionListener(new ActionListener() {
 
@@ -141,7 +148,8 @@ public class LandingView extends JPanel {
 			}
 		});
 
-		jb.setIcon(new ImageIcon(icon));
+		jb.setIcon(icon);
+		jb.addMouseListener(new IconChanger(icon, iconHover, jb));
 		c2.gridx = 1;
 		c2.gridy = 2;
 		panel.add(jb, c2);
@@ -152,13 +160,12 @@ public class LandingView extends JPanel {
 
 	private void displayButton(GridBagConstraints c) {
 		JButton jb = new JButton();
-		jb.setBackground(new Color(0, 0, 0, 0));
-		jb.setBorder(null);
+		Utils.transparentButton(jb);
 		jb.setPreferredSize(new Dimension(144, 42));
-		jb.setMargin(new Insets(0, 0, 0, 0));
-		jb.setContentAreaFilled(false);
-		jb.setIcon(new ImageIcon(icon));
+		
+		jb.setIcon(icon);
 		add(jb, c);
+		jb.addMouseListener(new IconChanger(icon, iconHover, jb));
 		jb.addActionListener(new ActionListener() {
 
 			@Override
@@ -183,3 +190,4 @@ public class LandingView extends JPanel {
 enum PanelType {
 	LOGIN, LANDING
 }
+

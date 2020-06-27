@@ -16,9 +16,9 @@ public class UserController {
 		Context context = Context.getInstance();
 		for (User user : context.getUsers()) {
 			if (user.getUsername().equals(usernamee) && user.getPassword().equals(password)) {
-				MainFrame.getInstance().processEvent(Event.LOOGED_IN, user);
 				context.setLogged(user);
 				context.setLoginAttempts(0);
+				MainFrame.getInstance().processEvent(Event.LOOGED_IN, user);
 				return true;
 
 			}
@@ -58,7 +58,7 @@ public class UserController {
 
 	public void register(User user) {
 		Context.getInstance().getUsers().add(user);
-		int row=Context.getInstance().getUsers().size()-1;
+		int row = Context.getInstance().getUsers().size() - 1;
 		UserAbstractTableModel.getInstance().fireTableRowsInserted(row, row);
 	}
 

@@ -3,12 +3,18 @@ package team5.view.tables;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
@@ -24,9 +30,11 @@ public class GenericTable extends JTable {
 		setRowHeight(40);
 		setShowGrid(false);
 		setIntercellSpacing(new Dimension(0, 0));
-		getTableHeader().setBackground( new Color(182, 64, 14));
-		getTableHeader().setForeground( new Color(255, 255, 255));
+		getTableHeader().setBackground(new Color(182, 64, 14));
+		getTableHeader().setForeground(new Color(255, 255, 255));
 		getTableHeader().setDefaultRenderer(new MyCoolTableHeaderRenderer(this));
+		setFillsViewportHeight(true);
+
 	}
 
 	@Override
@@ -36,18 +44,18 @@ public class GenericTable extends JTable {
 
 		c.setBorder(border);
 		if (isRowSelected(row)) {
-			c.setBackground(new Color(255,255,204));
+			c.setBackground(new Color(255, 255, 204));
 		} else {
 			if ((column + 1) % 2 != 0) {
 				c.setBackground(new Color(250, 210, 181));
 			} else {
 				c.setBackground(new Color(250, 139, 104));
 			}
-			
+
 		}
 		return c;
 	}
-	
+
 	private class MyCoolTableHeaderRenderer implements TableCellRenderer {
 
 		DefaultTableCellRenderer renderer;
@@ -60,9 +68,42 @@ public class GenericTable extends JTable {
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 				int row, int col) {
-			Component c = renderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-			return new JLabel(new ImageIcon("./resources/icon/login.png"));
-			//return c;
+			// Component c = renderer.getTableCellRendererComponent(table, value,
+			// isSelected, hasFocus, row, col);
+			String v = (String) value;
+
+			Image im = null;
+			try {
+				switch (v) {
+				case "username":
+					im = ImageIO.read(new File("./resources/icon/korisnik.png"));
+					break;
+				case "name":
+					im = ImageIO.read(new File("./resources/icon/IME.png"));
+					break;
+				case "lastname":
+					im = ImageIO.read(new File("./resources/icon/PREZIME.png"));
+					break;
+				case "type":
+					im = ImageIO.read(new File("./resources/icon/TIP.png"));
+					break;
+				}
+
+				// im = ImageIO.read(new File("./resources/icon/korisnici.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			if (im != null) {
+				JLabel lab = new JLabel(new ImageIcon(im.getScaledInstance(144 - 28, 42 - 8, Image.SCALE_SMOOTH)));
+				JPanel pan = new JPanel();
+				pan.setBackground(new Color(182, 64, 14));
+				pan.setBorder(new EmptyBorder(4, 4, 4, 4));
+				pan.add(lab);
+				return pan;
+			}
+
+			return new JLabel((v));// ./resources/icon/login.png
+			// return c;
 		}
 
 	}

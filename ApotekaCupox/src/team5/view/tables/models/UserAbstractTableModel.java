@@ -98,7 +98,7 @@ public class UserAbstractTableModel extends AbstractTableModel {
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		super.setValueAt(aValue, rowIndex, columnIndex);
-		if (columnIndex != 3) {
+		if (columnIndex != 4) {
 			return;
 		}
 		context.getUsers().get(rowIndex).setDeleted((boolean) aValue);
