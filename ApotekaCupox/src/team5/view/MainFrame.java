@@ -1,14 +1,11 @@
 package team5.view;
 
 import java.awt.BorderLayout;
+import java.util.Map;
 
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 
 import team5.controller.Event;
-import team5.model.Medicine;
-import team5.model.User;
-import team5.view.tables.TableFactory;
 
 public class MainFrame extends JFrame {
 	private static MainFrame instance;
@@ -37,7 +34,7 @@ public class MainFrame extends JFrame {
 			break;
 		case LOOGED_IN:
 			getContentPane().removeAll();
-			add(new MainView(ViewType.USERS),BorderLayout.CENTER);
+			add(new MainView(ViewType.USERS,0,0),BorderLayout.CENTER);
 
 			break;
 		case SHUT_DOWN:
@@ -49,11 +46,15 @@ public class MainFrame extends JFrame {
 			break;
 		case SHOW_MEDICINE:
 			getContentPane().removeAll();
-			add(new MainView(ViewType.MEDICINE),BorderLayout.CENTER);
+			Map<String,Integer> map=(Map<String, Integer>) o;
+			
+			add(new MainView(ViewType.MEDICINE,map.get("col"),map.get("direction") ),BorderLayout.CENTER);
 			break;
 		case SHOW_USERS:
 			getContentPane().removeAll();
-			add(new MainView(ViewType.USERS),BorderLayout.CENTER);
+			getContentPane().removeAll();
+			Map<String,Integer> map2=(Map<String, Integer>) o;
+			add(new MainView(ViewType.USERS,map2.get("col"),map2.get("direction") ),BorderLayout.CENTER);
 			
 			break;
 	

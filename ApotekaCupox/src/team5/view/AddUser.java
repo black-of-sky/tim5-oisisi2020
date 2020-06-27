@@ -101,7 +101,7 @@ public class AddUser extends JDialog {
 				
 				String error = "";
 				String username = usernameField.getText().trim();
-				String password = passwordField.getText().trim();
+				String password = passwordField.getText();
 				String type = (String) typeBox.getSelectedItem();
 				UserType userType = type.equals("Lekar") ? UserType.LEKAR
 						: type.equals("Apotekar") ? UserType.APOTEKAR : UserType.ADMINISTRATOR;
@@ -111,7 +111,7 @@ public class AddUser extends JDialog {
 					error += "Korisnicko ime nije uneto\r\n";
 				if (password.equals(""))
 					error += "Lozinka nije uneta\r\n";
-				if (password.equals(passwordField2.getText()))
+				if (!password.equals(passwordField2.getText()))
 					error += "Lozinke se ne poklapaju\r\n";
 				if (firstName.equals(""))
 					error += "Ime nije uneto\r\n";

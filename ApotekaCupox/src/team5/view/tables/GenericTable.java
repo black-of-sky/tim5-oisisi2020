@@ -34,6 +34,8 @@ public class GenericTable extends JTable {
 		getTableHeader().setForeground(new Color(255, 255, 255));
 		getTableHeader().setDefaultRenderer(new MyCoolTableHeaderRenderer(this));
 		setFillsViewportHeight(true);
+		getTableHeader().setReorderingAllowed(false);
+		setAutoCreateRowSorter(true);
 
 	}
 
