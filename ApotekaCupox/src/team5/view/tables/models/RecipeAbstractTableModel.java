@@ -1,27 +1,28 @@
 package team5.view.tables.models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import team5.model.Context;
-import team5.model.Medicine;
+import team5.model.Recipe;
 import team5.model.UserType;
 
-public class MedicineAbstractTableModel extends AbstractTableModel {
+public class RecipeAbstractTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 2710362894062472488L;
 
 	private static Context context = Context.getInstance();
 	private List<String> kolone = new ArrayList<String>();
 
-	private MedicineAbstractTableModel() {
-		kolone.add("med_id");
-		kolone.add("med_title");
-		kolone.add("med_producer");
-		kolone.add("med_price");
-		kolone.add("med_recipe");
+	private RecipeAbstractTableModel() {
+		kolone.add("rec_id");
+		kolone.add("rec_doc");
+		kolone.add("rec_jmbg");
+		kolone.add("rec_date");
+		kolone.add("rec_price");
 		if (Context.getInstance().getLogged().getType() == UserType.ADMINISTRATOR)
 			kolone.add("removed");
 	}
@@ -48,16 +49,16 @@ public class MedicineAbstractTableModel extends AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		switch (columnIndex) {
+		switch (columnIndex) { 
 		case 0:
 		case 1:
 		case 2:
 			return String.class;
 		case 3:
-			return Float.class;
+			return Date.class;
 		case 4:
+			return Float.class;
 		case 5:
-
 			return Boolean.class;
 		default:
 			return null;
@@ -66,22 +67,22 @@ public class MedicineAbstractTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Medicine m = context.getMedicine().get(rowIndex);
+		Recipe r = context.getRecipes().get(rowIndex);
 		switch (columnIndex) {
 		case 0:
-			return m.getId();
+			return r.getId();
 
 		case 1:
-			return m.getTitle();
+			return r.getDoctor();
 
 		case 2:
-			return m.getProducer();
+			return r.getJmbg();
 		case 3:
-			return m.getPrice();
+			return r.getDate();
 		case 4:
-			return m.isRecipe();
+			return r.getPrice();
 		case 5:
-			return m.isDeleted();
+			return r.isRemoved();
 
 		}
 		/*
@@ -99,11 +100,11 @@ public class MedicineAbstractTableModel extends AbstractTableModel {
 	 * context.getUsers().get(rowIndex).setDeleted((boolean) aValue); }
 	 */
 
-	private static MedicineAbstractTableModel instance;
+	private static RecipeAbstractTableModel instance;
 
-	public static MedicineAbstractTableModel getInstance() {
+	public static RecipeAbstractTableModel getInstance() {
 		if (instance == null)
-			instance = new MedicineAbstractTableModel();
+			instance = new RecipeAbstractTableModel();
 		return instance;
 	}
 

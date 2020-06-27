@@ -1,5 +1,5 @@
 package team5.view;
 
 public enum ViewType {
-	USERS,MEDICINE,NONE
+	USERS,MEDICINE,NONE,RECIPES
 }

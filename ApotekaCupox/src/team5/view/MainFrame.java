@@ -57,6 +57,13 @@ public class MainFrame extends JFrame {
 			add(new MainView(ViewType.USERS,map2.get("col"),map2.get("direction") ),BorderLayout.CENTER);
 			
 			break;
+		case SHOW_RECIPES:
+			getContentPane().removeAll();
+			getContentPane().removeAll();
+			Map<String,Integer> map3=(Map<String, Integer>) o;
+			add(new MainView(ViewType.RECIPES,map3.get("col"),map3.get("direction") ),BorderLayout.CENTER);
+			
+			break;
 	
 		default:
 			break;

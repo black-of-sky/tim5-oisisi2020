@@ -26,6 +26,7 @@ import team5.Utils;
 import team5.controller.actions.AddMedicineAction;
 import team5.controller.actions.AddUserAction;
 import team5.model.Medicine;
+import team5.model.Recipe;
 import team5.model.User;
 import team5.view.tables.TableFactory;;
 
@@ -50,8 +51,10 @@ public class MainView extends JPanel {
 		case USERS:
 			table=TableFactory.getTable(User.class);
 			break;
-		default:
+		case RECIPES:
+			table=TableFactory.getTable(Recipe.class);
 			break;
+
 		}
 		SortOrder ord=direction==1?SortOrder.ASCENDING:SortOrder.DESCENDING;
 		tableview.add((new JScrollPane(table)));
@@ -69,7 +72,7 @@ public class MainView extends JPanel {
 
 		JSplitPane tableSplit = createSplitPane(tableTitle, tableview, 0.1, 85, JSplitPane.VERTICAL_SPLIT);
 
-		JPanel sidebar = makeSidebar(viewtype);
+		JPanel sidebar = new Sidebar(viewtype,table);
 		sidebar.setBackground(new Color(255, 254, 223));
 
 		JSplitPane splitPaneinner = createSplitPane(tableSplit, sidebar, 0.95, -1, JSplitPane.HORIZONTAL_SPLIT);
@@ -91,56 +94,6 @@ public class MainView extends JPanel {
 
 	}
 
-	private JPanel makeSidebar(ViewType viewtype) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.gridx = 0;
-		c.fill = GridBagConstraints.NONE;
-
-		c.weighty = 1;
-		c.weightx = 1;
-
-		for (int i = 0; i < 8; ++i) {
-			c.gridy = i;
-			panel.add(javax.swing.Box.createGlue(), c);
-		}
-		c.gridy = 8;
-
-		c.anchor = GridBagConstraints.CENTER;
-		switch (viewtype) {
-		case USERS:
-			JButton jb = Utils.transparentButton(new JButton(new AddUserAction()));
-			ImageIcon hover = null;
-			try {
-				Image im = ImageIO.read(new File("./resources/icon/registracija selekt.png"));
-				hover = new ImageIcon(im.getScaledInstance(96, 48, Image.SCALE_DEFAULT));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			jb.addMouseListener(new IconChanger((ImageIcon) jb.getIcon(), hover, jb));
-			panel.add(jb, c);
-			break;
-		case MEDICINE:
-			JButton jb2 = Utils.transparentButton(new JButton(new AddMedicineAction()));
-			ImageIcon hover2 = null;
-			try {
-				Image im = ImageIO.read(new File("./resources/icon/dodaj selekt.png"));
-				hover2 = new ImageIcon(im.getScaledInstance(96, 48, Image.SCALE_DEFAULT));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			jb2.addMouseListener(new IconChanger((ImageIcon) jb2.getIcon(), hover2, jb2));
-			panel.add(jb2, c);
-			break;
-
-		default:
-			break;
-		}
-
-		return panel;
-	}
+	
 
 }

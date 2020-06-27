@@ -104,6 +104,22 @@ public class GenericTable extends JTable {
 				case "med_recipe":
 					im = ImageIO.read(new File("./resources/icon/recept2.png"));
 					break;
+				case "rec_price":
+					im = ImageIO.read(new File("./resources/icon/CENA.png"));
+					break;
+				case "rec_date":
+					im = ImageIO.read(new File("./resources/icon/DATUM.png"));
+					break;
+				case "rec_jmbg":
+					im = ImageIO.read(new File("./resources/icon/JMBG.png"));
+					break;
+				case "rec_doc":
+					im = ImageIO.read(new File("./resources/icon/LEKAR.png"));
+					break;
+				case "rec_id":
+					im = ImageIO.read(new File("./resources/icon/SIFRA.png"));
+					break;
+				
 				}
 
 		
