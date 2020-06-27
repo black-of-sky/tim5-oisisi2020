@@ -33,14 +33,12 @@ public class MainFrame extends JFrame {
 		case LOGIN_PRESSED:
 			getContentPane().removeAll();
 			getContentPane().add(new LandingView(PanelType.LOGIN),BorderLayout.CENTER);
-			revalidate();		
-			repaint();
+
 			break;
 		case LOOGED_IN:
 			getContentPane().removeAll();
-			add(new MainView(),BorderLayout.CENTER);
-			revalidate();		
-			repaint();
+			add(new MainView(ViewType.USERS),BorderLayout.CENTER);
+
 			break;
 		case SHUT_DOWN:
 			System.exit(1);
@@ -48,13 +46,22 @@ public class MainFrame extends JFrame {
 		case LOGGED_OUT:
 			getContentPane().removeAll();
 			getContentPane().add(new LandingView(PanelType.LANDING),BorderLayout.CENTER);
-			revalidate();		
-			repaint();
+			break;
+		case SHOW_MEDICINE:
+			getContentPane().removeAll();
+			add(new MainView(ViewType.MEDICINE),BorderLayout.CENTER);
+			break;
+		case SHOW_USERS:
+			getContentPane().removeAll();
+			add(new MainView(ViewType.USERS),BorderLayout.CENTER);
 			
+			break;
 	
 		default:
 			break;
 		}
+		revalidate();		
+		repaint();
 		
 	}
 }

@@ -16,11 +16,13 @@ public class MedicineAbstractTableModel extends AbstractTableModel {
 	private static Context context=Context.getInstance();
 	private List<String> kolone= new ArrayList<String>();
 	
-	public MedicineAbstractTableModel() {
-		kolone.add("id");
-		kolone.add("title");
-		kolone.add("producer");
-		kolone.add("price");
+	private MedicineAbstractTableModel() {
+		kolone.add("med_id");
+		kolone.add("med_title");
+		kolone.add("med_producer");
+		kolone.add("med_price");
+		kolone.add("med_recipe");
+		kolone.add("removed");
 	}
 
 	@Override
@@ -50,9 +52,12 @@ public class MedicineAbstractTableModel extends AbstractTableModel {
 		case 0:
 		case 1:
 		case 2:
-		case 3:
 			return String.class;
+		case 3:
+			return Float.class;
 		case 4:
+		case 5:
+
 			return Boolean.class;
 		default:
 			return null;
@@ -73,7 +78,10 @@ public class MedicineAbstractTableModel extends AbstractTableModel {
 				return m.getProducer();
 			case 3:
 				return m.getPrice();
-
+			case 4:
+				return m.isRecipe();
+			case 5:
+				return m.isDeleted();
 				
 		}
 		/*if (columnIndex < 4)
@@ -96,5 +104,15 @@ public class MedicineAbstractTableModel extends AbstractTableModel {
 		context.getUsers().get(rowIndex).setDeleted((boolean) aValue);
 	}
 */
+
+		private static MedicineAbstractTableModel instance;
+
+	
+	public static MedicineAbstractTableModel getInstance() {
+		if (instance==null)
+			instance=new MedicineAbstractTableModel();
+		return instance;
+	}
+
 
 }

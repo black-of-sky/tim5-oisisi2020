@@ -11,17 +11,15 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
-import team5.controller.Event;
-import team5.view.AddUser;
-import team5.view.MainFrame;
+import team5.view.AddMedicine;
 
-public class AddUserAction extends AbstractAction {
-	public AddUserAction() {
+public class AddMedicineAction extends AbstractAction {
+	public AddMedicineAction() {
 		putValue(NAME, "");
-		putValue(SHORT_DESCRIPTION, "Dodaj korisnika");
+		putValue(SHORT_DESCRIPTION, "Dodaj lek");
 		
 		try {
-			Image im=ImageIO.read(new File("./resources/icon/registracija.png"));
+			Image im=ImageIO.read(new File("./resources/icon/dodaj.png"));
 			putValue(LARGE_ICON_KEY, new ImageIcon(im.getScaledInstance(96, 48, Image.SCALE_DEFAULT)));
 
 		} catch (IOException e) {
@@ -33,6 +31,6 @@ public class AddUserAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		new AddUser().setVisible(true);
+		new AddMedicine().setVisible(true);
 	}
 }

@@ -1,6 +1,7 @@
 package team5.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,10 +26,11 @@ import team5.model.UserType;
 
 public class AddUser extends JDialog {
 	private ImageIcon iconHover, icon;
-
+	private static UserController userController = UserController.getInstance();
 	public AddUser() {
 		super();
-		setSize(400, 200);
+		setSize(500, 250);
+		setMinimumSize(new Dimension(500,250));
 		setLocationRelativeTo(null);
 		setModal(true);
 		
@@ -96,7 +98,7 @@ public class AddUser extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				UserController userController = UserController.getInstance();
+				
 				String error = "";
 				String username = usernameField.getText().trim();
 				String password = passwordField.getText().trim();

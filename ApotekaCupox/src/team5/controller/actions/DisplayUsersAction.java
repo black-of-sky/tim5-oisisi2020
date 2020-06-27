@@ -11,6 +11,9 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
+import team5.controller.Event;
+import team5.view.MainFrame;
+
 public class DisplayUsersAction extends AbstractAction {
 	public DisplayUsersAction() {
 		putValue(NAME, "");
@@ -31,6 +34,6 @@ public class DisplayUsersAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-	//TODO akcija
+		MainFrame.getInstance().processEvent(Event.SHOW_USERS, null);
 	}
 }

@@ -8,11 +8,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
-import team5.controller.UserController;
+import team5.controller.Event;
+import team5.view.MainFrame;
 
 public class DisplayMedicineAction extends AbstractAction {
 	public DisplayMedicineAction() {
@@ -34,6 +34,7 @@ public class DisplayMedicineAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-	//TODO akcija
+		//TODO sortiranje??
+		MainFrame.getInstance().processEvent(Event.SHOW_MEDICINE, null);
 	}
 }

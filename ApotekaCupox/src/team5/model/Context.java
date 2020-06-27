@@ -25,7 +25,7 @@ public class Context{
 		//*****
 		
 		medicine=new LinkedList<Medicine>();
-		medicine.add(new Medicine("poyy","lek", "pro", false, 22));
+		medicine.add(new Medicine("nemacka medecina","je", "najbolja", false, 22));
 	}
 	
 	public static Context getInstance() {

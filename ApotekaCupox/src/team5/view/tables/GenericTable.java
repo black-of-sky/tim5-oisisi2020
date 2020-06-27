@@ -38,7 +38,7 @@ public class GenericTable extends JTable {
 	}
 
 	@Override
-	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {	
 		JComponent c = (JComponent) super.prepareRenderer(renderer, row, column);
 		MatteBorder border = new MatteBorder(0, 0, 10, 0, new Color(182, 64, 14));
 
@@ -87,8 +87,27 @@ public class GenericTable extends JTable {
 				case "type":
 					im = ImageIO.read(new File("./resources/icon/TIP.png"));
 					break;
+				case "med_id":
+					im = ImageIO.read(new File("./resources/icon/SIFRA.png"));
+					break;
+				case "med_title":
+					im = ImageIO.read(new File("./resources/icon/IME.png"));
+					break;
+				case "med_producer":
+					im = ImageIO.read(new File("./resources/icon/PROIZVODJAC.png"));
+					break;
+				case "med_price":
+					im = ImageIO.read(new File("./resources/icon/CENA.png"));
+					break;
+				case "med_recipe":
+					im = ImageIO.read(new File("./resources/icon/recept2.png"));
+					break;
 				}
 
+		
+		
+				//kolone.add("removed");	
+			
 				// im = ImageIO.read(new File("./resources/icon/korisnici.png"));
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -12,12 +12,11 @@ public class TableFactory {
 	}
 
 	public static JTable getTable(Class<?> c) {
-		JTable ret=new GenericTable();
+		JTable ret = new GenericTable();
 		if (c == User.class) {
 			ret.setModel(UserAbstractTableModel.getInstance());
-		}
-		else if (c == Medicine.class) {
-			ret.setModel(new MedicineAbstractTableModel());
+		} else if (c == Medicine.class) {
+			ret.setModel(MedicineAbstractTableModel.getInstance());
 		}
 		return ret;
 	}
