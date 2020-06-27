@@ -46,6 +46,17 @@ public class MainView extends JPanel {
 			}
 		});
 		
+		JButton ab=new JButton("reg");
+		toolbar.add(ab);
+	ab.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AddUser().setVisible(true);
+				
+			}
+		});
+		
 		
 		c.fill=GridBagConstraints.BOTH;
 		
@@ -76,9 +87,7 @@ public class MainView extends JPanel {
 		add(splitPane);
 		splitPane.setDividerLocation(120);
 		splitPane.setResizeWeight(0.1);
-                          
-
-		System.out.println(splitPane.getDividerLocation());
+        splitPane.setEnabled(false);
 	}
 
 }

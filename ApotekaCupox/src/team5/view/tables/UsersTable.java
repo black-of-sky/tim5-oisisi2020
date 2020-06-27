@@ -23,7 +23,7 @@ public class UsersTable extends JTable {
 		this.setRowSelectionAllowed(true);
 		this.setColumnSelectionAllowed(false);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.setModel(new UserAbstractTableModel());
+		this.setModel(UserAbstractTableModel.getInstance());
 		// new ButtonColumnIgraci(this, 4);
 		setRowHeight(40);
 		// setShowHorizontalLines(false);

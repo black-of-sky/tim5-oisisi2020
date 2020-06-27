@@ -3,6 +3,7 @@ package team5.controller;
 import team5.model.Context;
 import team5.model.User;
 import team5.view.MainFrame;
+import team5.view.tables.models.UserAbstractTableModel;
 
 public class UserController {
 	private static UserController instance;
@@ -35,14 +36,30 @@ public class UserController {
 	}
 
 	public static UserController getInstance() {
-		if(instance==null)
-			instance=new UserController();
+		if (instance == null)
+			instance = new UserController();
 		return instance;
 	}
 
 	public void loginButtonPressed() {
 		MainFrame.getInstance().processEvent(Event.LOGIN_PRESSED, null);
-		
+
+	}
+
+	public boolean checkUsername(String username) {
+		for (User u : Context.getInstance().getUsers()) {
+			if (u.getUsername().equals(username)) {
+				return false;
+
+			}
+		}
+		return true;
+	}
+
+	public void register(User user) {
+		Context.getInstance().getUsers().add(user);
+		int row=Context.getInstance().getUsers().size()-1;
+		UserAbstractTableModel.getInstance().fireTableRowsInserted(row, row);
 	}
 
 }

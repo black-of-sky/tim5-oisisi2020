@@ -15,13 +15,19 @@ public class UserAbstractTableModel extends AbstractTableModel {
 
 	private static Context context=Context.getInstance();
 	private List<String> kolone= new ArrayList<String>();
-	
-	public UserAbstractTableModel() {
+	private static UserAbstractTableModel instance;
+	private UserAbstractTableModel() {
 		kolone.add("username");
 		kolone.add("name");
 		kolone.add("lastname");
 		kolone.add("type");
 		kolone.add("removed");
+	}
+	
+	public static UserAbstractTableModel getInstance() {
+		if (instance==null)
+			instance=new UserAbstractTableModel();
+		return instance;
 	}
 
 	@Override
