@@ -1,7 +1,7 @@
 package team5.model;
 
-import java.awt.Container;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +14,16 @@ public class Context {
 	private int loginAttempts = 0;
 
 	private List<Recipe> recipes;
+
+	private Recipe recipeBeingCreated = new Recipe(0, null, null, null, null);
+
+	public Recipe getRecipeBeingCreated() {
+		return recipeBeingCreated;
+	}
+
+	public void setRecipeBeingCreated(Recipe recipeBeingCreated) {
+		this.recipeBeingCreated = recipeBeingCreated;
+	}
 
 	private Context() {
 		users = new LinkedList<User>();
@@ -28,10 +38,14 @@ public class Context {
 		// *****
 
 		medicine = new LinkedList<Medicine>();
-		medicine.add(new Medicine("nemacka medecina", "je", "najbolja", false, 22));
-
+		medicine.add(new Medicine("nemacka medecina", "je najbolja", "na svetu", false, 22));
+		medicine.add(new Medicine("ubice ga", " bili", "ko zeca", false, 22.145f));
 		recipes = new LinkedList<Recipe>();
-		recipes.add(new Recipe(1, "aasd", "0120135", new Date(), null));
+		LinkedHashMap<String, Integer> ma = new LinkedHashMap<>();
+		ma.put("ubice ga", 12);
+		ma.put("nemacka medecina", 3);
+		Recipe r = new Recipe(1, "aasd", "0120135", new Date(), ma);
+		recipes.add(r);
 
 	}
 

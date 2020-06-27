@@ -16,7 +16,7 @@ public class RecipeAbstractTableModel extends AbstractTableModel {
 
 	private static Context context = Context.getInstance();
 	private List<String> kolone = new ArrayList<String>();
-
+	
 	private RecipeAbstractTableModel() {
 		kolone.add("rec_id");
 		kolone.add("rec_doc");
@@ -34,7 +34,7 @@ public class RecipeAbstractTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return context.getMedicine().size();
+		return context.getRecipes().size();
 	}
 
 	@Override

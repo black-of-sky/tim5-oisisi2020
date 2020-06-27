@@ -3,12 +3,15 @@ package team5.view;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
@@ -18,8 +21,9 @@ import team5.controller.actions.AddUserAction;
 
 public class Sidebar extends JPanel {
 	private JTable table;
-	public Sidebar(ViewType viewtype,JTable table) {
-		this.table=table;
+
+	public Sidebar(ViewType viewtype, JTable table) {
+		this.table = table;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
@@ -63,18 +67,42 @@ public class Sidebar extends JPanel {
 			add(jb2, c);
 			break;
 		case RECIPES:
-			/*JButton jb2 = Utils.transparentButton(new JButton(new AddMedicineAction()));
-			ImageIcon hover2 = null;
-			try {
-				Image im = ImageIO.read(new File("./resources/icon/dodaj selekt.png"));
-				hover2 = new ImageIcon(im.getScaledInstance(96, 48, Image.SCALE_DEFAULT));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			JButton jb3 = new JButton("detalji");
+			jb3.addActionListener(new ActionListener() {
 
-			jb2.addMouseListener(new IconChanger((ImageIcon) jb2.getIcon(), hover2, jb2));
-			add(jb2, c);
-			break;*/
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int row = table.getSelectedRow();
+					if (row == -1) {
+						JOptionPane.showMessageDialog(null, "niej selekotvan red");
+						return;
+					}
+					new RecipeContent(row).setVisible(true);;
+				}
+			});
+			add(jb3, c);
+			
+			jb3 = new JButton("novi");
+			jb3.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					new RecipeContent(-1).setVisible(true);;
+				}
+			});
+			c.gridy = 7;
+			add(jb3, c);
+			/*
+			 * JButton jb2 = Utils.transparentButton(new JButton(new AddMedicineAction()));
+			 * ImageIcon hover2 = null; try { Image im = ImageIO.read(new
+			 * File("./resources/icon/dodaj selekt.png")); hover2 = new
+			 * ImageIcon(im.getScaledInstance(96, 48, Image.SCALE_DEFAULT)); } catch
+			 * (IOException e) { e.printStackTrace(); }
+			 * 
+			 * jb2.addMouseListener(new IconChanger((ImageIcon) jb2.getIcon(), hover2,
+			 * jb2)); add(jb2, c); break;
+			 */
 		}
 	}
 }

@@ -1,13 +1,13 @@
 package team5.model;
 
 import java.util.Date;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class Recipe {
 	private int id;
 	private String doctor, jmbg;
 	private Date date;
-	private Map<String, Integer> quantity;
+	private LinkedHashMap<String, Integer> quantity;
 	private boolean removed;
 	private float price;
 
@@ -19,14 +19,14 @@ public class Recipe {
 		this.price = price;
 	}
 
-	public Recipe(int id, String doctor, String jmbg, Date date, Map<String, Integer> quantity) {
+	public Recipe(int id, String doctor, String jmbg, Date date, LinkedHashMap<String, Integer> quantity) {
 		super();
 		this.id = id;
 		this.doctor = doctor;
 		this.jmbg = jmbg;
 		removed = false;
 		this.date = date;
-		this.quantity = quantity;
+		this.quantity = quantity!=null?quantity:new LinkedHashMap<String, Integer>();
 	}
 
 	public int getId() {
@@ -61,11 +61,11 @@ public class Recipe {
 		this.date = date;
 	}
 
-	public Map<String, Integer> getQuantity() {
+	public LinkedHashMap<String, Integer> getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Map<String, Integer> quantity) {
+	public void setQuantity(LinkedHashMap<String, Integer> quantity) {
 		this.quantity = quantity;
 	}
 

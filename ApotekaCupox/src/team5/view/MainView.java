@@ -65,34 +65,24 @@ public class MainView extends JPanel {
 		sorter.sort();
 		tableview.setBorder(new EmptyBorder(0, 15, 15, 0));
 		tableview.setBackground(new Color(255, 254, 223));
-		JSplitPane splitPane = createSplitPane(toolbar, bottom, 0.1, 100, JSplitPane.VERTICAL_SPLIT);
+		JSplitPane splitPane = Utils.createSplitPane(toolbar, bottom, 0.1, 100, JSplitPane.VERTICAL_SPLIT);
 
 		JPanel tableTitle = new JPanel();
 		tableTitle.setBackground(new Color(255, 254, 223));
 
-		JSplitPane tableSplit = createSplitPane(tableTitle, tableview, 0.1, 85, JSplitPane.VERTICAL_SPLIT);
+		JSplitPane tableSplit = Utils.createSplitPane(tableTitle, tableview, 0.1, 85, JSplitPane.VERTICAL_SPLIT);
 
 		JPanel sidebar = new Sidebar(viewtype,table);
 		sidebar.setBackground(new Color(255, 254, 223));
 
-		JSplitPane splitPaneinner = createSplitPane(tableSplit, sidebar, 0.95, -1, JSplitPane.HORIZONTAL_SPLIT);
+		JSplitPane splitPaneinner = Utils.createSplitPane(tableSplit, sidebar, 0.95, -1, JSplitPane.HORIZONTAL_SPLIT);
 
 		bottom.add(splitPaneinner);
 
 		add(splitPane);
-
+		
 	}
 
-	private JSplitPane createSplitPane(Component up, Component down, double weight, int location, int orientation) {
-		JSplitPane sp = new JSplitPane(orientation, up, down);
-		sp.setDividerLocation(location);
-		sp.setResizeWeight(weight);
-		sp.setEnabled(false);
-		sp.setDividerSize(0);
-		sp.setBorder(null);
-		return sp;
-
-	}
 
 	
 
