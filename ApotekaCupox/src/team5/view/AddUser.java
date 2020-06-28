@@ -26,7 +26,6 @@ import team5.model.UserType;
 
 public class AddUser extends JDialog {
 	private ImageIcon iconHover, icon;
-	private static UserController userController = UserController.getInstance();
 	public AddUser() {
 		super();
 		setSize(500, 250);
@@ -117,10 +116,10 @@ public class AddUser extends JDialog {
 					error += "Ime nije uneto\r\n";
 				if (lastName.equals(""))
 					error += "Prezime nije uneto\r\n";
-				if (!userController.checkUsername(username))
+				if (!UserController.checkUsername(username))
 					error += "Korisnicko ime vec posotji\r\n";
 				if (error.equals("")) {
-					userController.register(new User(username, password, firstName, lastName, userType));
+					UserController.register(new User(username, password, firstName, lastName, userType));
 					setVisible(false);
 					dispose();
 				} else {

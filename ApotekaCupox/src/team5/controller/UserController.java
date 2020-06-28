@@ -6,13 +6,15 @@ import team5.view.MainFrame;
 import team5.view.tables.models.UserAbstractTableModel;
 
 public class UserController {
-	private static UserController instance;
+	/*
+	 * private static UserController instance;
+	 * 
+	 * private UserController() {
+	 * 
+	 * }
+	 */
 
-	private UserController() {
-
-	}
-
-	public boolean login(String usernamee, String password) {
+	public static boolean login(String usernamee, String password) {
 		Context context = Context.getInstance();
 		for (User user : context.getUsers()) {
 			if (user.getUsername().equals(usernamee) && user.getPassword().equals(password)) {
@@ -30,23 +32,21 @@ public class UserController {
 		return false;
 	}
 
-	public void logout() {
+	public static void logout() {
 		Context.getInstance().setLogged(null);
 		MainFrame.getInstance().processEvent(Event.LOGGED_OUT, null);
 	}
 
-	public static UserController getInstance() {
-		if (instance == null)
-			instance = new UserController();
-		return instance;
-	}
-
-	public void loginButtonPressed() {
+	/*
+	 * public static UserController getInstance() { if (instance == null) instance =
+	 * new UserController(); return instance; }
+	 */
+	public static void loginButtonPressed() {
 		MainFrame.getInstance().processEvent(Event.LOGIN_PRESSED, null);
 
 	}
 
-	public boolean checkUsername(String username) {
+	public static boolean checkUsername(String username) {
 		for (User u : Context.getInstance().getUsers()) {
 			if (u.getUsername().equals(username)) {
 				return false;
@@ -56,7 +56,7 @@ public class UserController {
 		return true;
 	}
 
-	public void register(User user) {
+	public static void register(User user) {
 		Context.getInstance().getUsers().add(user);
 		int row = Context.getInstance().getUsers().size() - 1;
 		UserAbstractTableModel.getInstance().fireTableRowsInserted(row, row);

@@ -13,17 +13,13 @@ public class Context {
 	private User logged = null;
 	private int loginAttempts = 0;
 
-	private List<Recipe> recipes;
+	private List<Prescription> prescriptions;
 
-	private Recipe recipeBeingCreated = new Recipe(0, null, null, null, null);
+	private Prescription recipeBeingCreated = new Prescription(0, null, null, null, null);
 
-	public Recipe getRecipeBeingCreated() {
-		return recipeBeingCreated;
-	}
+	private List<BillItem> currentCart; // trenutna korpa
 
-	public void setRecipeBeingCreated(Recipe recipeBeingCreated) {
-		this.recipeBeingCreated = recipeBeingCreated;
-	}
+	private List<Bill> bills; // svi racuni ikada
 
 	private Context() {
 		users = new LinkedList<User>();
@@ -35,18 +31,24 @@ public class Context {
 
 		User user3 = new User("asd", "asd", "asd", "asd", UserType.APOTEKAR);
 		users.add(user3);
-		// *****
-
 		medicine = new LinkedList<Medicine>();
 		medicine.add(new Medicine("nemacka medecina", "je najbolja", "na svetu", false, 22));
 		medicine.add(new Medicine("ubice ga", " bili", "ko zeca", false, 22.145f));
-		recipes = new LinkedList<Recipe>();
+		prescriptions = new LinkedList<Prescription>();
 		LinkedHashMap<String, Integer> ma = new LinkedHashMap<>();
 		ma.put("ubice ga", 12);
 		ma.put("nemacka medecina", 3);
-		Recipe r = new Recipe(1, "aasd", "0120135", new Date(), ma);
-		recipes.add(r);
+		Prescription r = new Prescription(1, "aasd", "0120135", new Date(), ma);
+		prescriptions.add(r);
 
+	}
+
+	public Prescription getRecipeBeingCreated() {
+		return recipeBeingCreated;
+	}
+
+	public void setPrescriptionBeingCreated(Prescription prescriptionBeingCreated) {
+		this.recipeBeingCreated = prescriptionBeingCreated;
 	}
 
 	public static Context getInstance() {
@@ -92,8 +94,36 @@ public class Context {
 		this.medicine = medicine;
 	}
 
-	public List<Recipe> getRecipes() {
-		return recipes;
+	public List<Prescription> getPrescription() {
+		return prescriptions;
+	}
+
+	public List<Prescription> getPrescriptions() {
+		return prescriptions;
+	}
+
+	public void setPrescriptions(List<Prescription> prescriptions) {
+		this.prescriptions = prescriptions;
+	}
+
+	public List<BillItem> getCurrentCart() {
+		return currentCart;
+	}
+
+	public void setCurrentCart(List<BillItem> currentCart) {
+		this.currentCart = currentCart;
+	}
+
+	public List<Bill> getBills() {
+		return bills;
+	}
+
+	public void setBills(List<Bill> bills) {
+		this.bills = bills;
+	}
+
+	public void setRecipeBeingCreated(Prescription recipeBeingCreated) {
+		this.recipeBeingCreated = recipeBeingCreated;
 	}
 
 }

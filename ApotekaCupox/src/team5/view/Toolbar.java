@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import team5.Utils;
+import team5.controller.actions.DisplayCartAction;
 import team5.controller.actions.DisplayMedicineAction;
 import team5.controller.actions.DisplayRecipesAction;
 import team5.controller.actions.DisplayUsersAction;
@@ -47,6 +48,7 @@ public class Toolbar extends JPanel{
 		add(Utils.transparentButton(new JButton(new DisplayMedicineAction())));
 		add(Utils.transparentButton(new JButton(new DisplayRecipesAction())));
 		add(Utils.transparentButton(new JButton(new LogoutAction())));
+		add(Utils.transparentButton(new JButton(new DisplayCartAction())));
 	}	
 	
 }

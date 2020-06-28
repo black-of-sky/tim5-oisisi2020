@@ -12,28 +12,25 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import team5.Utils;
 import team5.controller.MedicineController;
+import team5.controller.RecipeController;
 import team5.controller.UserController;
 import team5.model.Medicine;
-import team5.model.User;
-import team5.model.UserType;
 
-public class AddMedicine extends JDialog {
+public class AddMedicineToPrescription extends JDialog {
 	private ImageIcon iconHover, icon;
 
-	public AddMedicine() {
+	public AddMedicineToPrescription() {
 		super();
-		setSize(500, 250);
-		setMinimumSize(new Dimension(500, 250));
+		setSize(300, 140);
+		setMinimumSize(new Dimension(300, 140));
 		setLocationRelativeTo(null);
 		setModal(true);
 
@@ -50,32 +47,14 @@ public class AddMedicine extends JDialog {
 		JLabel idlabel = new JLabel("Sifra:");
 		JTextField idField = new JTextField();
 
-		JLabel proLabel = new JLabel("Proizvodjac :");
-		JTextField proField = new JTextField();
-
-		JLabel priceLabel = new JLabel("Cena :");
+		JLabel priceLabel = new JLabel("Kolicina :");
 		JTextField priceField = new JTextField();
 
-		JLabel nameLabel = new JLabel("Ime:");
-		JTextField nameField = new JTextField();
-
-		JLabel recipelab = new JLabel("Na recept :");
-		JCheckBox recipeBox = new JCheckBox();
-
 		JButton insert = Utils.transparentButton(new JButton());
-		panel = new JPanel(new GridLayout(6, 2, 15, 5));
+		panel = new JPanel(new GridLayout(3, 2, 15, 5));
 
 		panel.add(idlabel);
 		panel.add(idField);
-
-		panel.add(nameLabel);
-		panel.add(nameField);
-
-		panel.add(proLabel);
-		panel.add(proField);
-
-		panel.add(recipelab);
-		panel.add(recipeBox);
 
 		panel.add(priceLabel);
 		panel.add(priceField);
@@ -84,44 +63,38 @@ public class AddMedicine extends JDialog {
 		panel.add(insert);
 
 		panel.setBackground(new Color(255, 139, 104));
-		/*
-		 * usernameLabel.setBackground(new Color(255,139,104));
-		 * passwordLabel.setBackground(new Color(255,139,104));
-		 * nameLabel.setBackground(new Color(255,139,104)); lNameLabel.setBackground(new
-		 * Color(255,139,104)); typeLabel.setBackground(new Color(255,139,104));
-		 */
+
 		insert.addMouseListener(new IconChanger(icon, iconHover, insert));
 		insert.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-	
 				String error = "";
-				String name = nameField.getText().trim();
+
 				String id = idField.getText().trim();
 				String price = priceField.getText().trim();
-				String manuf = proField.getText().trim();
 
-				boolean recipe = recipeBox.isSelected();
-
-				if (name.equals(""))
-					error += "Ime leka nije uneto\r\n";
 				if (id.equals(""))
 					error += "Sifra leka nije uneta\r\n";
 				if (price.equals(""))
 					error += "Cena leka nije uneta\r\n";
-				Float pricef = null;
+				int pricef = 0;
 				try {
-					pricef = Float.parseFloat(price);
+					pricef = Integer.parseInt(price);
+					if (pricef <= 0) {
+						error += "Kolicina mora biti pzitivna\r\n";
+					}
 				} catch (NumberFormatException ex) {
-					error += "Cena nije u ispravnom formatu\r\n";
+					error += "Kolicina nije u ispravnom formatu\r\n";
 				}
-				if (manuf.equals(""))
-					error += "Proizvodjac leka nije unet\r\n";
-				if (!MedicineController.checkId(id))
-					error += "Sifra leka vec postoji\r\n";
+				Medicine med = MedicineController.getById(id);
+				if (med == null || med.isDeleted())
+					error += "Pogresna sifra leka\r\n";
+
+
 				if (error.equals("")) {
-					MedicineController.insert(new Medicine(id, name, manuf, recipe, pricef));
+					RecipeController.addMedicine(id, pricef);
+
 					setVisible(false);
 					dispose();
 				} else {
@@ -132,4 +105,5 @@ public class AddMedicine extends JDialog {
 
 		add(panel);
 	}
+
 }

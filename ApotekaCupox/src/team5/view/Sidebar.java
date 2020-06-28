@@ -77,7 +77,7 @@ public class Sidebar extends JPanel {
 						JOptionPane.showMessageDialog(null, "niej selekotvan red");
 						return;
 					}
-					new RecipeContent(row).setVisible(true);;
+					new PrescriptionContent(row).setVisible(true);;
 				}
 			});
 			add(jb3, c);
@@ -88,10 +88,60 @@ public class Sidebar extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					
-					new RecipeContent(-1).setVisible(true);;
+					new PrescriptionContent(-1).setVisible(true);
 				}
 			});
 			c.gridy = 7;
+			add(jb3, c);
+			break;
+		case CART:
+			JButton addMed = new JButton("dodaj lek");
+			addMed.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+				/*	int row = table.getSelectedRow();
+					if (row == -1) {
+						JOptionPane.showMessageDialog(null, "niej selekotvan red");
+						return;
+					}
+					new PrescriptionContent(row).setVisible(true);;*/
+				}
+			});
+			add(addMed, c);
+			
+			jb3 = new JButton("add recept");
+			jb3.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					//new PrescriptionContent(-1).setVisible(true);;
+				}
+			});
+			c.gridy = 6;
+			add(jb3, c);
+			jb3 = new JButton("izbrisi sve");
+			jb3.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					//new PrescriptionContent(-1).setVisible(true);;
+				}
+			});
+			c.gridy = 5;
+			add(jb3, c);
+			jb3 = new JButton("gotovo");
+			jb3.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					//new PrescriptionContent(-1).setVisible(true);;
+				}
+			});
+			c.gridy =4;
 			add(jb3, c);
 			/*
 			 * JButton jb2 = Utils.transparentButton(new JButton(new AddMedicineAction()));

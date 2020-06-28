@@ -141,7 +141,7 @@ public class LandingView extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!UserController.getInstance().login(usernameField.getText().trim(), passField.getText())) {
+				if (!UserController.login(usernameField.getText().trim(), passField.getText())) {
 					error.setText("Pogresni kredencijali");
 					MainFrame.getInstance().repaint();
 				}
@@ -170,7 +170,7 @@ public class LandingView extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				UserController.getInstance().loginButtonPressed();
+				UserController.loginButtonPressed();
 
 			}
 		});

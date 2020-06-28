@@ -33,6 +33,6 @@ public class LogoutAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		UserController.getInstance().logout();
+		UserController.logout();
 	}
 }

@@ -2,12 +2,14 @@ package team5.view.tables;
 
 import javax.swing.JTable;
 
+import team5.model.Bill;
 import team5.model.Medicine;
-import team5.model.Recipe;
+import team5.model.Prescription;
 import team5.model.User;
+import team5.view.tables.models.CartAbstactTableModel;
 import team5.view.tables.models.MedicineAbstractTableModel;
-import team5.view.tables.models.MedicineInRecipe;
-import team5.view.tables.models.RecipeAbstractTableModel;
+import team5.view.tables.models.MedicineInPrescriptionAbstactTableModel;
+import team5.view.tables.models.PrescriptionAbstractTableModel;
 import team5.view.tables.models.UserAbstractTableModel;
 
 public class TableFactory {
@@ -20,8 +22,10 @@ public class TableFactory {
 			ret.setModel(UserAbstractTableModel.getInstance());
 		} else if (c == Medicine.class) {
 			ret.setModel(MedicineAbstractTableModel.getInstance());
-		} else if (c == Recipe.class) {
-			ret.setModel(RecipeAbstractTableModel.getInstance());
+		} else if (c == Prescription.class) {
+			ret.setModel(PrescriptionAbstractTableModel.getInstance());
+		}else if (c == Bill.class) {
+			ret.setModel(CartAbstactTableModel.getInstance());
 		}
 		return ret;
 	}
@@ -29,8 +33,8 @@ public class TableFactory {
 	public static JTable getTable(Class<?> c, int index) {
 		JTable ret = new GenericTable();
 
-		if (c == Recipe.class) {
-			ret.setModel(new MedicineInRecipe(index));
+		if (c == Prescription.class) {
+			ret.setModel(new MedicineInPrescriptionAbstactTableModel(index));
 
 		}
 		return ret;
