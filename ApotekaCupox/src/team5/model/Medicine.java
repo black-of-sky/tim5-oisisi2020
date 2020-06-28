@@ -62,4 +62,11 @@ public class Medicine {
 		this.deleted = deleted;
 	}
 
+	@Override
+	public String toString() {
+		return getTitle()+" ("+getId()+")";
+	}
+	
+	
+
 }

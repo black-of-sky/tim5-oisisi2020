@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import team5.Utils;
+import team5.controller.CartController;
 import team5.controller.actions.AddMedicineAction;
 import team5.controller.actions.AddUserAction;
 
@@ -77,17 +78,18 @@ public class Sidebar extends JPanel {
 						JOptionPane.showMessageDialog(null, "niej selekotvan red");
 						return;
 					}
-					new PrescriptionContent(row).setVisible(true);;
+					new PrescriptionContent(row).setVisible(true);
+					;
 				}
 			});
 			add(jb3, c);
-			
+
 			jb3 = new JButton("novi");
 			jb3.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
+
 					new PrescriptionContent(-1).setVisible(true);
 				}
 			});
@@ -100,23 +102,18 @@ public class Sidebar extends JPanel {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-				/*	int row = table.getSelectedRow();
-					if (row == -1) {
-						JOptionPane.showMessageDialog(null, "niej selekotvan red");
-						return;
-					}
-					new PrescriptionContent(row).setVisible(true);;*/
+					new AddToCart(1).setVisible(true);
 				}
 			});
 			add(addMed, c);
-			
+
 			jb3 = new JButton("add recept");
 			jb3.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
-					//new PrescriptionContent(-1).setVisible(true);;
+						
+					new AddToCart(0).setVisible(true);
 				}
 			});
 			c.gridy = 6;
@@ -126,8 +123,7 @@ public class Sidebar extends JPanel {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
-					//new PrescriptionContent(-1).setVisible(true);;
+					CartController.removeAll();
 				}
 			});
 			c.gridy = 5;
@@ -137,11 +133,11 @@ public class Sidebar extends JPanel {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
-					//new PrescriptionContent(-1).setVisible(true);;
+
+					// new PrescriptionContent(-1).setVisible(true);;
 				}
 			});
-			c.gridy =4;
+			c.gridy = 4;
 			add(jb3, c);
 			/*
 			 * JButton jb2 = Utils.transparentButton(new JButton(new AddMedicineAction()));
