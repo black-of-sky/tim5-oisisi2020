@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Bill {
-	private String buyer;//kupac
+	private String buyer,soldBy;// //kupacsoldBy-apotekar koji ga je prodao;
 	private Date date;
 	private int discountPerc;//popust, procenat
 	private float fee; // kolik je platio, uradunat popust
@@ -60,6 +60,16 @@ public class Bill {
 
 	public void setItems(List<BillItem> items) {
 		this.items = items;
+	}
+
+
+	public String getSoldBy() {
+		return soldBy;
+	}
+
+
+	public void setSoldBy(String soldBy) {
+		this.soldBy = soldBy;
 	}
 	
 	

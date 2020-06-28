@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Context {
 
@@ -15,11 +16,12 @@ public class Context {
 
 	private List<Prescription> prescriptions;
 
-	private Prescription recipeBeingCreated = new Prescription(0, null, null, null, null);
-
+	private Prescription recipeBeingCreated;
 	private List<BillItem> currentCart; // trenutna korpa
 
 	private List<Bill> bills; // svi racuni ikada
+
+	private Map<String, ReportItem> currentReport;
 
 	private Context() {
 		users = new LinkedList<User>();
@@ -40,9 +42,18 @@ public class Context {
 		ma.put("nemacka medecina", 3);
 		Prescription r = new Prescription(1, "aasd", "0120135", new Date(), ma);
 		prescriptions.add(r);
-		
-		bills=new LinkedList<>();
 
+		bills = new LinkedList<>();
+
+		reset();
+	}
+
+	public void reset() {
+		// inicijalizuj vrednosti, ako se neko izloguje pa se uloguje novi da ne ostane
+		// nesto sto je prethodni gledao
+		// ova 2 su samo bitna posto se ne restratuju kad se promeni kartica
+		currentReport = new LinkedHashMap<>();
+		recipeBeingCreated = new Prescription(0, null, null, null, null);
 	}
 
 	public Prescription getRecipeBeingCreated() {
@@ -126,6 +137,14 @@ public class Context {
 
 	public void setRecipeBeingCreated(Prescription recipeBeingCreated) {
 		this.recipeBeingCreated = recipeBeingCreated;
+	}
+
+	public Map<String, ReportItem> getCurrentReport() {
+		return currentReport;
+	}
+
+	public void setCurrentReport(Map<String, ReportItem> currentReport) {
+		this.currentReport = currentReport;
 	}
 
 }

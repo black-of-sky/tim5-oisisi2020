@@ -28,7 +28,7 @@ public class CartController {
 		}
 
 		// ako ga nema pravi nov
-		b = new BillItem(med.getId(), recId, Context.getInstance().getLogged().getUsername(), q, q * med.getPrice());
+		b = new BillItem(med.getId(), recId, q, q * med.getPrice());
 		Context.getInstance().getCurrentCart().add(b);
 		int r = Context.getInstance().getCurrentCart().size() - 1;
 		CartAbstactTableModel.getInstance().fireTableRowsInserted(r, r);
@@ -102,9 +102,9 @@ public class CartController {
 	}
 
 	public static boolean createOrder() {
-		
+
 		List<BillItem> meds = Context.getInstance().getCurrentCart();
-		if(meds.size()<1)
+		if (meds.size() < 1)
 			return false;
 		Bill b = new Bill();
 		String buyer = MainView.getActiveInstance().getBuyer();
@@ -113,6 +113,7 @@ public class CartController {
 		b.setDiscountPerc(buyer.equals("") ? 0 : calculateDiscount(buyer));
 		b.setFee((float) (getTotalPrice() * (100.0 - b.getDiscountPerc()) / 100));
 		b.setItems(meds);
+		b.setSoldBy(Context.getInstance().getLogged().getUsername());
 		Context.getInstance().getBills().add(b);
 		Context.getInstance().setCurrentCart(new LinkedList<>());
 		return true;

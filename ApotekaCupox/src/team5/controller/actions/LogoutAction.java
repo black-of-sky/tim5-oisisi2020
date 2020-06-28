@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
 import team5.controller.UserController;
+import team5.model.Context;
 
 public class LogoutAction extends AbstractAction {
 	public LogoutAction() {
@@ -34,5 +35,6 @@ public class LogoutAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		UserController.logout();
+		Context.getInstance().reset();
 	}
 }

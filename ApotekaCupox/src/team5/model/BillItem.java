@@ -1,16 +1,16 @@
 package team5.model;
 
 public class BillItem {
-	private String medicineId, prescription, soldBy;// prescription=id recepta (ako je dodato sa recepta),
-													// soldBy-apotekar koji ga je prodao
+	private String medicineId, prescription;// prescription=id recepta (ako je dodato sa recepta),
+
 	private int quantity;
 	private float totalPrice;
 
-	public BillItem(String medicineId, String prescription, String soldBy, int quantity, float totalPrice) {
+	public BillItem(String medicineId, String prescription, int quantity, float totalPrice) {
 		super();
 		this.medicineId = medicineId;
 		this.prescription = prescription;
-		this.soldBy = soldBy;
+
 		this.quantity = quantity;
 		this.totalPrice = totalPrice;
 	}
@@ -29,14 +29,6 @@ public class BillItem {
 
 	public void setPrescription(String prescription) {
 		this.prescription = prescription;
-	}
-
-	public String getSoldBy() {
-		return soldBy;
-	}
-
-	public void setSoldBy(String soldBy) {
-		this.soldBy = soldBy;
 	}
 
 	public int getQuantity() {
