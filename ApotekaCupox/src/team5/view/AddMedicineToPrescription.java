@@ -7,11 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,7 +22,6 @@ import javax.swing.JTextField;
 import team5.Utils;
 import team5.controller.MedicineController;
 import team5.controller.RecipeController;
-import team5.controller.UserController;
 import team5.model.Medicine;
 
 public class AddMedicineToPrescription extends JDialog {
@@ -44,8 +44,9 @@ public class AddMedicineToPrescription extends JDialog {
 		// setLayout(new GridBagLayout());
 		JPanel panel = new JPanel();
 
-		JLabel idlabel = new JLabel("Sifra:");
-		JTextField idField = new JTextField();
+		JLabel idlabel = new JLabel("Sifra leka:");
+		List<Medicine> meds = MedicineController.getAll();
+		JComboBox<Medicine> idField = new JComboBox(meds.toArray());
 
 		JLabel priceLabel = new JLabel("Kolicina :");
 		JTextField priceField = new JTextField();
@@ -71,11 +72,9 @@ public class AddMedicineToPrescription extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				String error = "";
 
-				String id = idField.getText().trim();
+				String id = ((Medicine) idField.getSelectedItem()).getId();
 				String price = priceField.getText().trim();
 
-				if (id.equals(""))
-					error += "Sifra leka nije uneta\r\n";
 				if (price.equals(""))
 					error += "Cena leka nije uneta\r\n";
 				int pricef = 0;
@@ -90,7 +89,6 @@ public class AddMedicineToPrescription extends JDialog {
 				Medicine med = MedicineController.getById(id);
 				if (med == null || med.isDeleted())
 					error += "Pogresna sifra leka\r\n";
-
 
 				if (error.equals("")) {
 					RecipeController.addMedicine(id, pricef);

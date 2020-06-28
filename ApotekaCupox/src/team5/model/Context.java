@@ -40,6 +40,8 @@ public class Context {
 		ma.put("nemacka medecina", 3);
 		Prescription r = new Prescription(1, "aasd", "0120135", new Date(), ma);
 		prescriptions.add(r);
+		
+		bills=new LinkedList<>();
 
 	}
 

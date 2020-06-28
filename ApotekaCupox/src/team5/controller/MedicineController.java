@@ -46,5 +46,10 @@ public class MedicineController {
 	public static List<Medicine> getAllNoPerscription() {
 		return Context.getInstance().getMedicine().stream().filter(m->!m.isDeleted()&&!m.isRecipe()).collect(Collectors.toList());
 	}
+	
+	public static List<Medicine> getAll() {
+		return Context.getInstance().getMedicine().stream().filter(m->!m.isDeleted()).collect(Collectors.toList());
+	}
+
 
 }

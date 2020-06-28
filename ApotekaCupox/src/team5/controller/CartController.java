@@ -1,8 +1,12 @@
 package team5.controller;
 
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
+import team5.model.Bill;
 import team5.model.BillItem;
 import team5.model.Context;
 import team5.model.Medicine;
@@ -19,7 +23,7 @@ public class CartController {
 			b.setTotalPrice(b.getQuantity() * med.getPrice());
 			int r = Context.getInstance().getCurrentCart().indexOf(b);
 			CartAbstactTableModel.getInstance().fireTableRowsUpdated(r, r);
-			MainView.getActiveInstance().updateTotalPrice(CartController.getTotalPrice());
+			MainView.getActiveInstance().updateTotalPrice();
 			return;
 		}
 
@@ -28,10 +32,10 @@ public class CartController {
 		Context.getInstance().getCurrentCart().add(b);
 		int r = Context.getInstance().getCurrentCart().size() - 1;
 		CartAbstactTableModel.getInstance().fireTableRowsInserted(r, r);
-		MainView.getActiveInstance().updateTotalPrice(CartController.getTotalPrice());
+		MainView.getActiveInstance().updateTotalPrice();
 	}
 
-	private static float getTotalPrice() {
+	public static float getTotalPrice() {
 		float ret = 0;
 		for (BillItem i : Context.getInstance().getCurrentCart())
 			ret += i.getTotalPrice();
@@ -71,10 +75,47 @@ public class CartController {
 
 	public static void removeAll() {
 		Context.getInstance().setCurrentCart(new LinkedList<BillItem>());
-		MainView.getActiveInstance().updateTotalPrice(CartController.getTotalPrice());
+		MainView.getActiveInstance().reset();
 		CartAbstactTableModel.getInstance().fireTableDataChanged();
 
+	}
+
+	public static int calculateDiscount(String user) {
+		if (user.equals(""))
+			return 0;
+		float spent = 0;
+		for (Bill billy : Context.getInstance().getBills().stream().filter(b -> b.getBuyer().equals(user))
+				.collect(Collectors.toList())) {
+			// popusti idu ovako:
+			// 5% ako se prijavio(samo mu apotekar uneo ime), 10% ako je OVOG MESECA
+			// potrosio > 1000, 20% vise od 5k
+
+			Date d = new Date();
+			int year = d.getYear();
+			int month = d.getMonth();
+			if (billy.getDate().getYear() == year && billy.getDate().getMonth() == month) {
+				spent += billy.getFee();
+			}
+
+		}
+		return spent >= 5000 ? 25 : spent >= 1000 ? 10 : 5;
+	}
+
+	public static boolean createOrder() {
 		
+		List<BillItem> meds = Context.getInstance().getCurrentCart();
+		if(meds.size()<1)
+			return false;
+		Bill b = new Bill();
+		String buyer = MainView.getActiveInstance().getBuyer();
+		b.setBuyer(buyer);
+		b.setDate(new Date());
+		b.setDiscountPerc(buyer.equals("") ? 0 : calculateDiscount(buyer));
+		b.setFee((float) (getTotalPrice() * (100.0 - b.getDiscountPerc()) / 100));
+		b.setItems(meds);
+		Context.getInstance().getBills().add(b);
+		Context.getInstance().setCurrentCart(new LinkedList<>());
+		return true;
 	}
 
 }
