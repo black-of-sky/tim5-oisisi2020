@@ -1,5 +1,6 @@
 package team5.controller;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -27,7 +28,11 @@ public class RecipeController {
 		return instance;
 	}
 
-	public void insert(Recipe rec) {
+	public void create(String jmbg) {
+		Recipe rec = Context.getInstance().getRecipeBeingCreated();
+		rec.setDate(new Date());
+		rec.setDoctor(Context.getInstance().getLogged().getUsername());
+		rec.setJmbg(jmbg);
 		rec.setId(Context.getInstance().getRecipes().size());
 		Context.getInstance().getRecipes().add(rec);
 		int row = Context.getInstance().getMedicine().size() - 1;
@@ -43,7 +48,9 @@ public class RecipeController {
 			set = Context.getInstance().getRecipeBeingCreated().getQuantity().entrySet();
 
 		for (Entry<String, Integer> entry : set) {
-			total += entry.getValue() * MedicineController.getInstance().getById(entry.getKey()).getPrice();
+			Medicine med = MedicineController.getInstance().getById(entry.getKey());
+			if (!med.isDeleted())
+				total += entry.getValue() * med.getPrice();
 		}
 		return total;
 	}

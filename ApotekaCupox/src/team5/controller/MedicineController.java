@@ -1,5 +1,6 @@
 package team5.controller;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import team5.model.Context;
@@ -36,8 +37,9 @@ public class MedicineController {
 	}
 
 	public Medicine getById(String key) {
-		return Context.getInstance().getMedicine().stream().filter(val -> val.getId().equals(key))
-				.collect(Collectors.toList()).get(0);
+		List<Medicine> a = Context.getInstance().getMedicine().stream().filter(val -> val.getId().equals(key))
+				.collect(Collectors.toList());
+		return a.size() > 0 ? a.get(0) : null;
 
 	}
 

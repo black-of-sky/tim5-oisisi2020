@@ -17,7 +17,7 @@ public class SortDialog extends JDialog {
 	public Checkbox cb;
 	public SortDialog(List<JButton> buttons) {
 		setModal(true);
-		setSize(500, 500);
+		setSize(500, buttons.size()*75);
 		setLocationRelativeTo(null);
 		setLayout(new GridBagLayout());
 		

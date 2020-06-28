@@ -1,11 +1,13 @@
 package team5.view.tables.models;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import team5.controller.RecipeController;
 import team5.model.Context;
 import team5.model.Recipe;
 import team5.model.UserType;
@@ -16,7 +18,7 @@ public class RecipeAbstractTableModel extends AbstractTableModel {
 
 	private static Context context = Context.getInstance();
 	private List<String> kolone = new ArrayList<String>();
-	
+
 	private RecipeAbstractTableModel() {
 		kolone.add("rec_id");
 		kolone.add("rec_doc");
@@ -49,13 +51,13 @@ public class RecipeAbstractTableModel extends AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		switch (columnIndex) { 
+		switch (columnIndex) {
 		case 0:
 		case 1:
 		case 2:
 			return String.class;
 		case 3:
-			return Date.class;
+			return String.class;
 		case 4:
 			return Float.class;
 		case 5:
@@ -78,27 +80,19 @@ public class RecipeAbstractTableModel extends AbstractTableModel {
 		case 2:
 			return r.getJmbg();
 		case 3:
-			return r.getDate();
+			SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+			return f.format(r.getDate());
+			
 		case 4:
-			return r.getPrice();
+			return RecipeController.getInstance().getTotalPrice(rowIndex);
 		case 5:
 			return r.isRemoved();
 
 		}
-		/*
-		 * if (columnIndex < 4) return BazaIgraca.getInstance().getValueAt(rowIndex,
-		 * columnIndex); else if (columnIndex == 4) { JButton btn = new JButton("" +
-		 * rowIndex); return btn; } else if (columnIndex == 5) { return
-		 * koJeOtkacen.get(rowIndex); }
-		 */
+
 		return null;
 	}
-	/*
-	 * @Override public void setValueAt(Object aValue, int rowIndex, int
-	 * columnIndex) { super.setValueAt(aValue, rowIndex, columnIndex); if
-	 * (columnIndex != 3) { return; }
-	 * context.getUsers().get(rowIndex).setDeleted((boolean) aValue); }
-	 */
 
 	private static RecipeAbstractTableModel instance;
 

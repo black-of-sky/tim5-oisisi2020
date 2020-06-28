@@ -47,14 +47,11 @@ public class DisplayRecipesAction extends AbstractAction {
 		try {
 			im = ImageIO.read(new File("./resources/icon/SIFRA.png"));
 			buttons.add(getButon(im));
-			im = ImageIO.read(new File("./resources/icon/JMBG.png"));
-			buttons.add(getButon(im));
 			im = ImageIO.read(new File("./resources/icon/LEKAR.png"));
 			buttons.add(getButon(im));
 			im = ImageIO.read(new File("./resources/icon/DATUM.png"));
 			buttons.add(getButon(im));
-			im = ImageIO.read(new File("./resources/icon/CENA.png"));
-			buttons.add(getButon(im));
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
