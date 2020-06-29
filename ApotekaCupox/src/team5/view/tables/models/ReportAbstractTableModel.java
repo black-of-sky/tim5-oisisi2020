@@ -26,7 +26,7 @@ public class ReportAbstractTableModel extends AbstractTableModel {
 		kolone.add("med_id");
 		kolone.add("med_title");
 		kolone.add("quantity");
-		kolone.add("total_price");
+		kolone.add("med_price");
 	}
 
 	public static ReportAbstractTableModel getInstance() {

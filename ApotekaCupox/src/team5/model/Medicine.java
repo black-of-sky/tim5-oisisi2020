@@ -64,7 +64,7 @@ public class Medicine implements Serializable {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
-		Utils.saveMeToFilePlease(Context.getInstance().getMedicine(), "./data/medicine.data"); // CUVANJE
+		Utils.saveMeToFilePlease(Context.getInstance().getMedicine(), "./medicine.data"); // CUVANJE
 	}
 
 	@Override

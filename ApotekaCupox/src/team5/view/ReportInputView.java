@@ -26,11 +26,11 @@ import team5.model.Medicine;
 
 public class ReportInputView extends JDialog {
 	private JComboBox<String> box = null;// combo box za ime prodavca ili proizvodjaca
-
+	private boolean closed=true;
 	public ReportInputView(int option) {// 0=proizvodjac 1=apotekar
 		super();
-		setSize(500, 250);
-		setMinimumSize(new Dimension(500, 250));
+		setSize(300, 140);
+	
 		setLocationRelativeTo(null);
 		setModal(true);
 
@@ -69,6 +69,7 @@ public class ReportInputView extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				closed=false;
 				dispose();
 
 			}
@@ -76,6 +77,12 @@ public class ReportInputView extends JDialog {
 
 		add(panel);
 	}
+
+	
+	public boolean isClosed() {
+		return closed;
+	}
+
 
 	public String getText() {
 		return (String) box.getSelectedItem();

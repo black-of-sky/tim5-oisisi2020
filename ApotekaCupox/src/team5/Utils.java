@@ -20,8 +20,12 @@ import javax.swing.JSplitPane;
 import javax.swing.RowFilter;
 
 import team5.model.Context;
+import team5.model.Prescription;
 import team5.model.UserType;
+import team5.view.PrescriptionContent;
 import team5.view.ViewType;
+import team5.view.tables.models.MedicineAbstractTableModel;
+import team5.view.tables.models.PrescriptionAbstractTableModel;
 import team5.view.tables.models.TellMeIfYouAreDeleted;
 
 public class Utils {
@@ -69,7 +73,6 @@ public class Utils {
 			im = ImageIO.read(new File(path));
 			return new ImageIcon(im.getScaledInstance(80, 80, Image.SCALE_DEFAULT));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -101,6 +104,10 @@ public class Utils {
 		};
 	}
 
+	public static RowFilter stringFiltering(int columnId, String text) {
+		return RowFilter.regexFilter("(?i)" + text, columnId);// (?i) radi case insensitive regex matching
+	}
+
 	public static void saveMeToFilePlease(Object what, String where) {
 		File f = new File(where);
 		ObjectOutputStream objOutStream = null;
@@ -108,14 +115,14 @@ public class Utils {
 			objOutStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
 			objOutStream.writeObject(what);
 		} catch (IOException e1) {
-		//	e1.printStackTrace();
+			// e1.printStackTrace();
 		} finally {
 
 			try {
 				if (objOutStream != null)
 					objOutStream.close();
 			} catch (Exception e) {
-			//	e.printStackTrace();
+				// e.printStackTrace();
 			}
 		}
 	}
@@ -128,16 +135,52 @@ public class Utils {
 			objInStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)));
 			ret = objInStream.readObject();
 		} catch (Exception e) {
-		//	e.printStackTrace();
+			// e.printStackTrace();
 		} finally {
 			try {
 				if (objInStream != null)
 					objInStream.close();
 			} catch (Exception e) {
-				//e.printStackTrace();
+				// e.printStackTrace();
 			}
 		}
 		return ret;
+	}
+
+	// getIdentifier za default row filter vrati indeks reda
+	public static RowFilter<Object, Object> minMaxFilter(int col, float min, float max) {
+		return new RowFilter<Object, Object>() {// kod sa stackoverflowa xD
+			public boolean include(Entry<? extends Object, ? extends Object> entry) {
+				if (entry.getModel() instanceof MedicineAbstractTableModel) {// ovo filtriranej ide samo za lekove
+					MedicineAbstractTableModel t = (MedicineAbstractTableModel) entry.getModel();
+					float price = (float) t.getValueAt((int) entry.getIdentifier(), col);
+					return price >= min && price <= max; // ako je u [min, max] true, u suprotnom false
+				}
+				return true;// do ovoga nece nikad doci jer ce se ovo koristiti samo za lekove XD ali po
+							// defaultu se red vidi, skrzo nebitno xd
+			}
+		};
+
+	}
+
+	// getIdentifier za default row filter vrati indeks reda
+	public static RowFilter<Object, Object> prescriptionContainsMedicineFilter(String medId) {
+		return new RowFilter<Object, Object>() {// kod sa stackoverflowa xD
+			public boolean include(Entry<? extends Object, ? extends Object> entry) {
+				if (entry.getModel() instanceof PrescriptionAbstractTableModel) {// ovo filtriranej ide samo za recepte
+					// MedicineAbstractTableModel t = (MedicineAbstractTableModel) entry.getModel();
+					// ovde ne moye preko modela jer tabela ne prikayuje lekove dok se ne stinse
+					// details
+					Prescription p = Context.getInstance().getPrescriptions().get((int) entry.getIdentifier());
+					for (java.util.Map.Entry<String, Integer> m : p.getQuantity().entrySet()) {
+						if (m.getKey().equals(medId))
+							return true;// ako ima ovaj lek na recpetu vrati true
+					}
+				}
+				return false;// ako nema false
+			}
+		};
+
 	}
 
 }

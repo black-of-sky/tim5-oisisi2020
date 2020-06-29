@@ -2,13 +2,9 @@ package team5.view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -17,9 +13,11 @@ import javax.swing.JTable;
 
 import team5.Utils;
 import team5.controller.CartController;
+import team5.controller.MedicineController;
 import team5.controller.actions.AddMedicineAction;
 import team5.controller.actions.AddPerscriptionAction;
 import team5.controller.actions.AddUserAction;
+import team5.controller.actions.ShowAdditionalInfoAction;
 import team5.controller.actions.ShowAllReportsAction;
 import team5.controller.actions.ShowProducerReportAction;
 import team5.controller.actions.ShowSellerReportAction;
@@ -52,6 +50,11 @@ public class Sidebar extends JPanel {
 			ImageIcon hover = Utils.getImageicon("./resources/icon/registracija selekt.png");
 			jb.addMouseListener(new IconChanger((ImageIcon) jb.getIcon(), hover, jb));
 			add(jb, c);
+			JButton jbShowMOre = Utils.transparentButton(new JButton(new ShowAdditionalInfoAction(table)));
+			hover = Utils.getImageicon("./resources/icon/registracija selekt.png");
+			jbShowMOre.addMouseListener(new IconChanger((ImageIcon) jbShowMOre.getIcon(), hover, jbShowMOre));
+			c.gridy--;
+			add(jbShowMOre, c);
 			break;
 		case MEDICINE:
 			JButton jb2 = Utils.transparentButton(new JButton(new AddMedicineAction(false, table)));
@@ -133,6 +136,11 @@ public class Sidebar extends JPanel {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					if (MedicineController.getAllNoPerscription().size() == 0) {
+						JOptionPane.showMessageDialog(null, "Nema lekova koji se mogu dodati", "Greska",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					new AddToCart(1, -1).setVisible(true);
 				}
 			});

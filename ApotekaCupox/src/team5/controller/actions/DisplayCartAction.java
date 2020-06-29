@@ -28,7 +28,7 @@ public class DisplayCartAction extends AbstractAction {
 		putValue(SHORT_DESCRIPTION, "Korpa");
 
 		try {
-			Image im = ImageIO.read(new File("./resources/icon/korisnici"+(selected?" selektovan":"")+".png"));
+			Image im = ImageIO.read(new File("./resources/icon/korpa"+(selected?" selekt":"")+".png"));
 			putValue(LARGE_ICON_KEY, new ImageIcon(im.getScaledInstance(96, 96, Image.SCALE_DEFAULT)));
 			// putValue(SMALL_ICON, new ImageIcon(im.getScaledInstance(96, 96,
 			// Image.SCALE_DEFAULT)));

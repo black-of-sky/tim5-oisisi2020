@@ -7,9 +7,12 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.DefaultRowSorter;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,7 +22,6 @@ import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
-import javax.swing.RowFilter.Entry;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -27,15 +29,14 @@ import javax.swing.event.DocumentListener;
 import team5.Utils;
 import team5.controller.CartController;
 import team5.controller.ReportsController;
+import team5.controller.actions.DisplaySearchAction;
 import team5.model.Bill;
 import team5.model.Context;
 import team5.model.Medicine;
 import team5.model.Prescription;
 import team5.model.ReportItem;
 import team5.model.User;
-import team5.model.UserType;
-import team5.view.tables.TableFactory;
-import team5.view.tables.models.MedicineAbstractTableModel;;
+import team5.view.tables.TableFactory;;
 
 public class MainView extends JPanel {
 	private static MainView activeInstance;
@@ -43,10 +44,10 @@ public class MainView extends JPanel {
 	private JLabel discount;// ya izvestaj je profit, za korpu popust
 	private JTextField field;
 	private JLabel reportInfo;
+	private JTable table;
 
 	public MainView(ViewType viewtype, int colSort, int direction) {
 		activeInstance = this;
-		// setLayout(new GridBagLayout());
 		JPanel toolbar = new Toolbar(viewtype);// JPanel();
 		setLayout(new BorderLayout());
 		JPanel tableview = new JPanel();
@@ -57,6 +58,7 @@ public class MainView extends JPanel {
 		bottom.setLayout(new BorderLayout());
 		bottom.setBorder(new EmptyBorder(25, 25, 0, 25));
 		JTable table = getTable(viewtype);
+		this.table = table;
 		SortOrder ord = direction == 1 ? SortOrder.ASCENDING : SortOrder.DESCENDING;
 		JScrollPane jsp = new JScrollPane(table == null ? new JPanel() : table);
 		if (viewtype == viewtype.NONE)
@@ -68,10 +70,7 @@ public class MainView extends JPanel {
 			list.add(new RowSorter.SortKey(colSort, ord));
 			sorter.setSortKeys(list);
 			sorter.sort();
-			
-			// sorter = ((DefaultRowSorter) table.getRowSorter());
-			sorter.setRowFilter(Utils.isDeletedFilter());
-			
+			filterTable(null);
 		}
 		tableview.setBorder(new EmptyBorder(0, 15, 15, 0));
 		tableview.setBackground(new Color(255, 254, 223));
@@ -86,8 +85,8 @@ public class MainView extends JPanel {
 		c2.weighty = 1;
 		c2.weightx = 1;
 		if (viewtype != ViewType.NONE) {
-
 			ImageIcon ic = Utils.getImageForTable(viewtype);
+			tableTitle.setBorder(new EmptyBorder(5, 10, 5, 10));
 			tableTitle.add(new JLabel(ic), c2);
 		}
 		if (viewtype == ViewType.CART) {
@@ -96,9 +95,6 @@ public class MainView extends JPanel {
 			c2.gridx = 1;
 			c2.gridy = 0;
 			c2.gridwidth = 5;
-			/*
-			 * tableTitle.add(price, c2); c2.gridy = 1; c2.weighty = 1;
-			 */
 			tableTitle.add(getCartPanel(), c2);
 
 		} else if (viewtype == ViewType.REPORTS) {
@@ -116,9 +112,16 @@ public class MainView extends JPanel {
 			c2.gridy = 1;
 			tableTitle.add(price, c2);
 			c2.gridx = 1;
-			c2.gridy = 1;
 			tableTitle.add(discount, c2);
-
+		} else if (viewtype != ViewType.NONE && viewtype != ViewType.USERS) {// znaci se osim none reports,users i cart
+																				// ima pretragu
+			c2.gridy = 0;
+			c2.gridx = 1;
+			c2.fill=GridBagConstraints.BOTH;
+			JButton serc=Utils.transparentButton(new JButton(new DisplaySearchAction(viewtype)));
+			ImageIcon iconHover=Utils.getImageicon("./resources/icon/pretraga selekt.png");
+			serc.addMouseListener(new IconChanger((ImageIcon) serc.getIcon(), iconHover, serc));
+			tableTitle.add(serc, c2);
 		}
 		tableTitle.setBackground(new Color(255, 254, 223));
 
@@ -156,10 +159,8 @@ public class MainView extends JPanel {
 			updateTotalPrice();
 			break;
 		case REPORTS:
-
 			table = TableFactory.getTable(ReportItem.class);
 			break;
-
 		}
 		return table;
 	}
@@ -177,11 +178,9 @@ public class MainView extends JPanel {
 		c2.gridx = 1;
 		field = new JTextField();
 		c2.fill = GridBagConstraints.HORIZONTAL;
-
 		ret.add(field, c2);
-		c2.weighty = 1;
-		c2.gridy = 1;
 		c2.gridx = 0;
+		c2.gridy = 1;
 		discount = new JLabel("Popust: 0% ");
 		ret.add(discount, c2);
 		field.getDocument().addDocumentListener(new DocumentListener() {
@@ -202,13 +201,12 @@ public class MainView extends JPanel {
 				calcDiscount(field.getText());
 			}
 		});
-		c2.gridy = 1;
 		c2.gridx = 1;
+		c2.gridy = 1;
 		ret.add(price, c2);
 		for (Component c : ret.getComponents()) {
 			c.setFont(new Font("arial", Font.PLAIN, 25));
 		}
-
 		return ret;
 	}
 
@@ -262,6 +260,15 @@ public class MainView extends JPanel {
 			discount.setText("Zarada: " + ReportsController.getTotalProfit());
 		}
 
+	}
+
+	public void filterTable(RowFilter<Object, Object> filter) {
+		DefaultRowSorter sorter = ((DefaultRowSorter) table.getRowSorter());
+		List<RowFilter<Object, Object>> f = new LinkedList<>();
+		f.add(Utils.isDeletedFilter());
+		if (filter != null)
+			f.add(filter);
+		sorter.setRowFilter(RowFilter.andFilter(f));
 	}
 
 }

@@ -22,7 +22,7 @@ import team5.view.ReportInputView;
 public class ShowSellerReportAction extends AbstractAction {
 	public ShowSellerReportAction() {
 		putValue(NAME, "");
-		putValue(SHORT_DESCRIPTION, "Prikazi sve");
+		putValue(SHORT_DESCRIPTION, "Prikazi izvestaj za apotekara");
 
 		try {
 			Image im = ImageIO.read(new File("./resources/icon/ukupna prodaja apotekara.png"));
@@ -42,6 +42,8 @@ public class ShowSellerReportAction extends AbstractAction {
 		}
 		ReportInputView rv = new ReportInputView(1);
 		rv.setVisible(true);
+		if (rv.isClosed())
+			return;
 		ReportsController.getBySeller(rv.getText());
 		Context.getInstance().setReportFor(" o prodaji apotekara " + rv.getText());
 		MainView.getActiveInstance().updateReportInfo();

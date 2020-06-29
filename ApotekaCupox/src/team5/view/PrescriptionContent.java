@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import team5.Utils;
-import team5.controller.RecipeController;
+import team5.controller.PrescriptionController;
 import team5.model.Context;
 import team5.model.Medicine;
 import team5.model.Prescription;
@@ -38,7 +38,7 @@ public class PrescriptionContent extends JDialog {
 		setSize(500, 500);
 		JComponent up = new JScrollPane(TableFactory.getTable(Prescription.class, index));
 		JPanel down = new JPanel();
-		price = new JLabel(("Ukupna cena: " + RecipeController.getTotalPrice(index)));
+		price = new JLabel(("Ukupna cena: " + PrescriptionController.getTotalPrice(index)));
 		down.add(price);
 		setLocationRelativeTo(null);
 
@@ -100,13 +100,16 @@ public class PrescriptionContent extends JDialog {
 					String jmbg = jmbgField.getText().trim();
 
 					if (jmbg.equals(""))
-						error += "Jmbg pacijenta nije unet\r\n";
-
+						error += "JMBG pacijenta nije unet\r\n";
+					else if(jmbg.length()!=13) 
+						error += "JMBG mora imati 13 cifara\r\n";
+					else if(!jmbg.matches("[0-9]+"))
+							error += "JMBG mora sadrzati samo cifre\r\n";
 					else if (Context.getInstance().getRecipeBeingCreated().getQuantity().size() == 0)
 						error += "Nije dodat nijedan lek\r\n";
 
 					if (error.equals("")) {
-						RecipeController.create(jmbg);
+						PrescriptionController.create(jmbg);
 						setVisible(false);
 						dispose();
 					} else {
@@ -120,6 +123,6 @@ public class PrescriptionContent extends JDialog {
 	}
 
 	public void updateRecipePrice() {
-		price.setText("Ukupna cena:" + RecipeController.getTotalPrice(index));
+		price.setText("Ukupna cena:" + PrescriptionController.getTotalPrice(index));
 	}
 }

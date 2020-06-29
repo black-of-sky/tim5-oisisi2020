@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 
 import team5.Utils;
 import team5.controller.MedicineController;
-import team5.controller.RecipeController;
+import team5.controller.PrescriptionController;
 import team5.model.Medicine;
 
 public class AddMedicineToPrescription extends JDialog {
@@ -91,7 +91,7 @@ public class AddMedicineToPrescription extends JDialog {
 					error += "Pogresna sifra leka\r\n";
 
 				if (error.equals("")) {
-					RecipeController.addMedicine(id, pricef);
+					PrescriptionController.addMedicine(id, pricef);
 
 					setVisible(false);
 					dispose();

@@ -1,13 +1,20 @@
 package team5.controller;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.swing.text.html.parser.Entity;
 
 import team5.model.Bill;
 import team5.model.BillItem;
 import team5.model.Context;
 import team5.model.Medicine;
+import team5.model.Prescription;
 import team5.model.ReportItem;
+import team5.model.User;
+import team5.model.UserType;
 import team5.view.tables.models.ReportAbstractTableModel;
 
 public class ReportsController {
@@ -78,5 +85,35 @@ public class ReportsController {
 		}
 
 		return total;
+	}
+
+	public static Map<String, Integer> getStaticticForUser(User u) {
+		Map<String, Integer> ret = new HashMap<String, Integer>();
+		if (u.getType() == UserType.LEKAR) {
+			for (Prescription p : Context.getInstance().getPrescriptions()) {
+				if (p.getDoctor().equals(u.getUsername())) {
+					for (Entry<String, Integer> a : p.getQuantity().entrySet()) {
+						int q = a.getValue();
+						if (ret.containsKey(a.getKey()))
+							ret.put(a.getKey(), q + ret.get(a.getKey()));
+						else
+							ret.put(a.getKey(), q);
+					}
+				}
+			}
+		} else {
+			for (Bill bill : Context.getInstance().getBills()) {
+				if (bill.getSoldBy().equals(u.getUsername())) {
+					for (BillItem a : bill.getItems()) {
+						if (ret.containsKey(a.getMedicineId()))
+							ret.put(a.getMedicineId(), a.getQuantity() + ret.get(a.getMedicineId()));
+						else
+							ret.put(a.getMedicineId(), a.getQuantity());
+					}
+				}
+			}
+		}
+
+		return ret;
 	}
 }

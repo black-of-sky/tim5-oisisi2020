@@ -19,7 +19,7 @@ import team5.view.ReportInputView;
 public class ShowProducerReportAction extends AbstractAction {
 	public ShowProducerReportAction() {
 		putValue(NAME, "");
-		putValue(SHORT_DESCRIPTION, "Prikazi sve");
+		putValue(SHORT_DESCRIPTION, "Prikazi izvestaj za proizvodjaca");
 
 		try {
 			Image im = ImageIO.read(new File("./resources/icon/ukupna prodaja proizvodjaca.png"));
@@ -33,12 +33,14 @@ public class ShowProducerReportAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if(Context.getInstance().getMedicine().size()==0) {
+		if (Context.getInstance().getMedicine().size() == 0) {
 			JOptionPane.showMessageDialog(null, "Nema lekova", "Greska", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		ReportInputView rv = new ReportInputView(0);
 		rv.setVisible(true);
+		if (rv.isClosed())
+			return;
 		ReportsController.getByProducer(rv.getText());
 		Context.getInstance().setReportFor(" za proizvodjaca: " + rv.getText());
 		MainView.getActiveInstance().updateReportInfo();

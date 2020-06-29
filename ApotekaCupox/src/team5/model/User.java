@@ -62,9 +62,11 @@ public class User implements Serializable {
 	}
 
 	public void setDeleted(boolean deleted) {
-
+		if (getUsername().equals("admin"))
+			return;// za admina ne damo da mu se iskljuci nalog kako bi uvek postojao bar jedan
+					// koji moze da udje xD
 		this.deleted = deleted;
-		Utils.saveMeToFilePlease(Context.getInstance().getUsers(), "./data/users.data");
+		Utils.saveMeToFilePlease(Context.getInstance().getUsers(), "./users.data");
 	}
 
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import team5.controller.RecipeController;
+import team5.controller.PrescriptionController;
 import team5.model.Context;
 import team5.model.Prescription;
 import team5.model.UserType;
@@ -85,7 +85,7 @@ public class PrescriptionAbstractTableModel extends AbstractTableModel implement
 			return f.format(r.getDate());
 
 		case 4:
-			return RecipeController.getTotalPrice(rowIndex);
+			return PrescriptionController.getTotalPrice(rowIndex);
 		case 5:
 			return r.isRemoved();
 

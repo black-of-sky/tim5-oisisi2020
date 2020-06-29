@@ -78,7 +78,7 @@ public class Prescription implements Serializable{
 
 	public void setRemoved(boolean removed) {
 		this.removed = removed;
-		Utils.saveMeToFilePlease(Context.getInstance().getPrescriptions(), "./data/prescriptions.data");
+		Utils.saveMeToFilePlease(Context.getInstance().getPrescriptions(), "./prescriptions.data");
 	}
 
 }
