@@ -3,6 +3,7 @@ package team5.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -36,6 +37,7 @@ public class SearchDialog extends JDialog {
 
 	public SearchDialog(String[] data) {
 		super();
+		Utils.setLogo(this);
 		setSize(300, 140);
 		setLocationRelativeTo(null);
 		setModal(true);
@@ -44,8 +46,8 @@ public class SearchDialog extends JDialog {
 		ImageIcon icon = null;
 		ImageIcon iconHover = null;
 		try {
-			icon = new ImageIcon(ImageIO.read(new File("./resources/icon/dodaj lek.png")));
-			iconHover = new ImageIcon(ImageIO.read(new File("./resources/icon/dodaj lek selekt.png")));
+			icon = new ImageIcon(ImageIO.read(new File("./resources/icon/pretraga.png")));
+			iconHover = new ImageIcon(ImageIO.read(new File("./resources/icon/pretraga selekt.png")));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

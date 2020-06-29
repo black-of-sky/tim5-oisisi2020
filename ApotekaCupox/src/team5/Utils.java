@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JSplitPane;
 import javax.swing.RowFilter;
 
@@ -181,6 +182,15 @@ public class Utils {
 			}
 		};
 
+	}
+
+	public static void setLogo(JDialog c) {
+		try {
+			Image icon = ImageIO.read(new File("./resources/icon/logo.png"));
+			c.setIconImage(icon);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 }

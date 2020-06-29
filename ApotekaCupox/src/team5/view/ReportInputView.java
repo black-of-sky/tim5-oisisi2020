@@ -3,6 +3,7 @@ package team5.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -29,6 +30,7 @@ public class ReportInputView extends JDialog {
 	private boolean closed=true;
 	public ReportInputView(int option) {// 0=proizvodjac 1=apotekar
 		super();
+		Utils.setLogo(this);
 		setSize(300, 140);
 	
 		setLocationRelativeTo(null);

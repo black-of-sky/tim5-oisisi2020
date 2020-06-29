@@ -3,6 +3,7 @@ package team5.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -33,6 +34,7 @@ public class PrescriptionContent extends JDialog {
 	private JLabel price;
 
 	public PrescriptionContent(int index) {
+		Utils.setLogo(this);
 		setModal(true);
 		this.index = index;
 		setSize(500, 500);

@@ -1,7 +1,11 @@
 package team5.view;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -16,6 +20,7 @@ import team5.view.tables.TableFactory;
 public class MoreInfoAboutUser extends JDialog {
 
 	public MoreInfoAboutUser(User u, Map<String, Integer> data) {
+		Utils.setLogo(this);
 		setModal(true);
 		setSize(500, 500);
 		JComponent up = new JScrollPane(TableFactory.getUserDetailsTable(data));

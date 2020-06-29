@@ -3,6 +3,7 @@ package team5.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -34,6 +35,7 @@ public class AddMedicine extends JDialog {
 
 	public AddMedicine(int selected) {
 		super();
+		Utils.setLogo(this);
 		setSize(500, 250);
 		setMinimumSize(new Dimension(500, 250));
 		setLocationRelativeTo(null);

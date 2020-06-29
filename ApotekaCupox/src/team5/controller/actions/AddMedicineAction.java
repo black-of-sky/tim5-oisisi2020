@@ -47,7 +47,7 @@ public class AddMedicineAction extends AbstractAction {
 		else {
 			int selected = table.getSelectedRow();
 			if (selected < 0) {
-				JOptionPane.showMessageDialog(null, "Nijedan lek nije selektovan");
+				JOptionPane.showMessageDialog(null, "Nijedan lek nije selektovan","Greska",JOptionPane.ERROR_MESSAGE);
 
 				return;
 			}

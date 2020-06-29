@@ -3,6 +3,7 @@ package team5.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -28,7 +29,8 @@ public class AddMedicineToPrescription extends JDialog {
 	private ImageIcon iconHover, icon;
 
 	public AddMedicineToPrescription() {
-		super();
+		Utils.setLogo(this);
+		
 		setSize(300, 140);
 		setMinimumSize(new Dimension(300, 140));
 		setLocationRelativeTo(null);

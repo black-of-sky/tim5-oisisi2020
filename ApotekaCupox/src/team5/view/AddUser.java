@@ -3,6 +3,7 @@ package team5.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -28,6 +29,7 @@ public class AddUser extends JDialog {
 	private ImageIcon iconHover, icon;
 	public AddUser() {
 		super();
+		Utils.setLogo(this);
 		setSize(500, 250);
 		setMinimumSize(new Dimension(500,250));
 		setLocationRelativeTo(null);
