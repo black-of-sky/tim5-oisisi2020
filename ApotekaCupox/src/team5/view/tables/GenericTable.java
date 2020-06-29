@@ -8,16 +8,21 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.DefaultRowSorter;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
+import javax.swing.RowFilter.Entry;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
+
+import team5.view.tables.models.MedicineAbstractTableModel;
 
 public class GenericTable extends JTable {
 
@@ -36,7 +41,7 @@ public class GenericTable extends JTable {
 		setFillsViewportHeight(true);
 		getTableHeader().setReorderingAllowed(false);
 		setAutoCreateRowSorter(true);
-
+		
 	}
 
 	@Override

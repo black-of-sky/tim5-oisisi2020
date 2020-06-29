@@ -23,8 +23,8 @@ public class Context {
 
 	private Map<String, ReportItem> currentReport;
 
-	private String reportFor=""; //kojo se izvestaj trenutnog prikazyuje (ovo se prikazuje iznad tabele)
-	
+	private String reportFor = ""; // kojo se izvestaj trenutnog prikazyuje (ovo se prikazuje iznad tabele)
+
 	private Context() {
 		users = new LinkedList<User>();
 		User user = new User("admin", "admin", "admin", "admin", UserType.ADMINISTRATOR);
@@ -56,6 +56,9 @@ public class Context {
 		// ova 2 su samo bitna posto se ne restratuju kad se promeni kartica
 		currentReport = new LinkedHashMap<>();
 		recipeBeingCreated = new Prescription(0, null, null, null, null);
+		reportFor = "";
+		currentCart = new LinkedList<>();
+
 	}
 
 	public Prescription getRecipeBeingCreated() {
@@ -156,6 +159,5 @@ public class Context {
 	public void setReportFor(String reportFor) {
 		this.reportFor = reportFor;
 	}
-	
 
 }

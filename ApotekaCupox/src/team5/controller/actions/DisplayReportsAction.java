@@ -22,13 +22,13 @@ import team5.view.MainFrame;
 import team5.view.SortDialog;
 
 public class DisplayReportsAction extends AbstractAction {
-	public DisplayReportsAction() {
+	public DisplayReportsAction(boolean selected) {
 		putValue(NAME, "");
 		// putValue(MNEMONIC_KEY, KeyEvent.VK_Q);
 		putValue(SHORT_DESCRIPTION, "Izvestaji");
 
 		try {
-			Image im = ImageIO.read(new File("./resources/icon/izvestaj.png"));
+			Image im = ImageIO.read(new File("./resources/icon/izvestaj" + (selected ? " selektovan" : "") + ".png"));
 			putValue(LARGE_ICON_KEY, new ImageIcon(im.getScaledInstance(96, 96, Image.SCALE_DEFAULT)));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

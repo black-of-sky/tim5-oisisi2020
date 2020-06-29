@@ -22,13 +22,13 @@ import team5.view.MainFrame;
 import team5.view.SortDialog;
 
 public class DisplayUsersAction extends AbstractAction {
-	public DisplayUsersAction() {
+	public DisplayUsersAction(boolean selected) {
 		putValue(NAME, "");
 		// putValue(MNEMONIC_KEY, KeyEvent.VK_Q);
 		putValue(SHORT_DESCRIPTION, "Korisnici");
 
 		try {
-			Image im = ImageIO.read(new File("./resources/icon/korisnici.png"));
+			Image im = ImageIO.read(new File("./resources/icon/korisnici" + (selected ? " selektovan" : "") + ".png"));
 			putValue(LARGE_ICON_KEY, new ImageIcon(im.getScaledInstance(96, 96, Image.SCALE_DEFAULT)));
 			// putValue(SMALL_ICON, new ImageIcon(im.getScaledInstance(96, 96,
 			// Image.SCALE_DEFAULT)));

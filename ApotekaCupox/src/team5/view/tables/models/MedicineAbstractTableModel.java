@@ -9,7 +9,7 @@ import team5.model.Context;
 import team5.model.Medicine;
 import team5.model.UserType;
 
-public class MedicineAbstractTableModel extends AbstractTableModel {
+public class MedicineAbstractTableModel extends AbstractTableModel implements TellMeIfYouAreDeleted {
 
 	private static final long serialVersionUID = 2710362894062472488L;
 
@@ -28,7 +28,7 @@ public class MedicineAbstractTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;// columnIndex >=4;
+		return columnIndex == 5;// columnIndex >=4;
 	}
 
 	@Override
@@ -105,6 +105,19 @@ public class MedicineAbstractTableModel extends AbstractTableModel {
 		if (instance == null)
 			instance = new MedicineAbstractTableModel();
 		return instance;
+	}
+
+	@Override
+	public boolean areYouDeleted(int row) {
+		return context.getMedicine().get(row).isDeleted();
+	}
+
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		super.setValueAt(aValue, rowIndex, columnIndex);
+		if (columnIndex != 5) {
+			return;
+		}
+		context.getMedicine().get(rowIndex).setDeleted((boolean) aValue);
 	}
 
 }

@@ -12,7 +12,7 @@ import team5.model.Context;
 import team5.model.Prescription;
 import team5.model.UserType;
 
-public class PrescriptionAbstractTableModel extends AbstractTableModel {
+public class PrescriptionAbstractTableModel extends AbstractTableModel implements TellMeIfYouAreDeleted{
 
 	private static final long serialVersionUID = 2710362894062472488L;
 
@@ -31,7 +31,7 @@ public class PrescriptionAbstractTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;// columnIndex >=4;
+		return columnIndex == 5;// columnIndex >=4;
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class PrescriptionAbstractTableModel extends AbstractTableModel {
 			SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 			return f.format(r.getDate());
-			
+
 		case 4:
 			return RecipeController.getTotalPrice(rowIndex);
 		case 5:
@@ -100,6 +100,19 @@ public class PrescriptionAbstractTableModel extends AbstractTableModel {
 		if (instance == null)
 			instance = new PrescriptionAbstractTableModel();
 		return instance;
+	}
+
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		super.setValueAt(aValue, rowIndex, columnIndex);
+		if (columnIndex != 5) {
+			return;
+		}
+		context.getPrescription().get(rowIndex).setRemoved((boolean) aValue);
+	}
+
+	@Override
+	public boolean areYouDeleted(int row) {
+		return context.getPrescription().get(row).isRemoved();
 	}
 
 }

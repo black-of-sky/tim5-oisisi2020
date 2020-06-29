@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import team5.controller.Event;
+import team5.model.Context;
 
 public class MainFrame extends JFrame {
 	private static MainFrame instance;
@@ -48,7 +49,7 @@ public class MainFrame extends JFrame {
 			break;
 		case LOOGED_IN:
 			add(new MainView(ViewType.NONE, 0, 0), BorderLayout.CENTER);
-
+			Context.getInstance().reset();//restratruje parametre, ako je ostalo od prethodnog ko je bio ulogovan
 			break;
 		case SHUT_DOWN:
 			System.exit(1);

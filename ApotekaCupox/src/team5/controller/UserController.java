@@ -1,7 +1,11 @@
 package team5.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import team5.model.Context;
 import team5.model.User;
+import team5.model.UserType;
 import team5.view.MainFrame;
 import team5.view.tables.models.UserAbstractTableModel;
 
@@ -62,4 +66,9 @@ public class UserController {
 		UserAbstractTableModel.getInstance().fireTableRowsInserted(row, row);
 	}
 
+	public static String[] getAllPharmacist() {
+		List<String> a = Context.getInstance().getUsers().stream().filter(u -> u.getType() == UserType.APOTEKAR)
+				.map(u -> u.getUsername()).distinct().collect(Collectors.toList());
+		return a.toArray(new String[0]);
+	}
 }

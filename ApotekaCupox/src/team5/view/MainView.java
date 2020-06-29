@@ -6,24 +6,20 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.DefaultRowSorter;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
+import javax.swing.RowFilter.Entry;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -31,15 +27,15 @@ import javax.swing.event.DocumentListener;
 import team5.Utils;
 import team5.controller.CartController;
 import team5.controller.ReportsController;
-import team5.controller.actions.AddMedicineAction;
-import team5.controller.actions.AddUserAction;
 import team5.model.Bill;
 import team5.model.Context;
 import team5.model.Medicine;
 import team5.model.Prescription;
 import team5.model.ReportItem;
 import team5.model.User;
-import team5.view.tables.TableFactory;;
+import team5.model.UserType;
+import team5.view.tables.TableFactory;
+import team5.view.tables.models.MedicineAbstractTableModel;;
 
 public class MainView extends JPanel {
 	private static MainView activeInstance;
@@ -51,7 +47,7 @@ public class MainView extends JPanel {
 	public MainView(ViewType viewtype, int colSort, int direction) {
 		activeInstance = this;
 		// setLayout(new GridBagLayout());
-		JPanel toolbar = new Toolbar();// JPanel();
+		JPanel toolbar = new Toolbar(viewtype);// JPanel();
 		setLayout(new BorderLayout());
 		JPanel tableview = new JPanel();
 		tableview.setLayout(new BorderLayout());
@@ -72,6 +68,10 @@ public class MainView extends JPanel {
 			list.add(new RowSorter.SortKey(colSort, ord));
 			sorter.setSortKeys(list);
 			sorter.sort();
+			
+			// sorter = ((DefaultRowSorter) table.getRowSorter());
+			sorter.setRowFilter(Utils.isDeletedFilter());
+			
 		}
 		tableview.setBorder(new EmptyBorder(0, 15, 15, 0));
 		tableview.setBackground(new Color(255, 254, 223));
@@ -153,6 +153,7 @@ public class MainView extends JPanel {
 			price = new JLabel("Ukupno: 0");
 			price.setFont(new Font("arial", Font.PLAIN, 25));
 			table = TableFactory.getTable(Bill.class);
+			updateTotalPrice();
 			break;
 		case REPORTS:
 
@@ -229,13 +230,18 @@ public class MainView extends JPanel {
 	}
 
 	public void updateTotalPrice() {
+		if (price == null)
+			price = new JLabel();
+		if (field == null)
+			field = new JTextField();
+
 		float f = CartController.getTotalPrice();
 		price.setText("Ukupno: " + f * (100 - CartController.calculateDiscount(field.getText())) / 100);
 		repaint();
 	}
 
 	public void reset() {
-		price.setText("Ukupno: 0");
+		price.setText("Ukupno: 0.0");
 		field.setText("");
 		repaint();
 	}

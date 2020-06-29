@@ -24,7 +24,7 @@ import team5.model.Medicine;
 
 public class AddToCart extends JDialog {
 
-	public AddToCart(int option) {// 1 lek, 0 recept
+	public AddToCart(int option, int selected) {// 1 lek, 0 recept
 		setModal(true);
 		setLocationRelativeTo(null);
 		setSize(340, 125 + 50 * option);
@@ -41,7 +41,11 @@ public class AddToCart extends JDialog {
 			JLabel medsLabel = new JLabel("Lek:");
 			List<Medicine> meds = MedicineController.getAllNoPerscription();
 			JComboBox<Medicine> medsBox = new JComboBox(meds.toArray());
-
+			if (selected > -1) {
+				medsBox.setSelectedIndex(selected);
+				medsBox.setSelectedItem(meds.get(selected));
+				medsBox.setEnabled(false);
+			}
 			add(medsLabel);
 			add(medsBox);
 

@@ -20,7 +20,7 @@ public class ReportsController {
 		// seller = ko je prodao, ako je null ona nije bitno ko je prodao
 		LinkedHashMap<String, ReportItem> ret = new LinkedHashMap<String, ReportItem>();
 		for (Bill b : Context.getInstance().getBills()) {// svi racuni
-			if (producer != null && !b.getSoldBy().equals(seller)) // ako je bitan prodavac, i ovaj racun nije izdao
+			if (seller != null && !b.getSoldBy().equals(seller)) // ako je bitan prodavac, i ovaj racun nije izdao
 																	// onaj kog trazimo
 				continue;// preskocimo racun
 

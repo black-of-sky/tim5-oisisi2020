@@ -11,8 +11,13 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JSplitPane;
+import javax.swing.RowFilter;
+import javax.swing.RowFilter.Entry;
 
+import team5.model.Context;
+import team5.model.UserType;
 import team5.view.ViewType;
+import team5.view.tables.models.TellMeIfYouAreDeleted;
 
 public class Utils {
 	public static JButton transparentButton(JButton jb) {
@@ -35,10 +40,10 @@ public class Utils {
 	}
 
 	public static ImageIcon getImageForTable(ViewType viewtype) {
-		String path="./resources/icon/logo.png";
+		String path = "./resources/icon/logo.png";
 		switch (viewtype) {
 		case CART:
-			//TODO ikonice
+			// TODO ikonice
 
 			break;
 		case USERS:
@@ -64,6 +69,31 @@ public class Utils {
 		}
 		return null;
 
+	}
+
+	public static ImageIcon getImageicon(String path) {
+		ImageIcon icon = null;
+		try {
+			Image im = ImageIO.read(new File(path));
+			icon = new ImageIcon(im.getScaledInstance(96, 48, Image.SCALE_DEFAULT));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return icon;
+	}
+
+	public static RowFilter isDeletedFilter() {
+		return new RowFilter<Object, Object>() {// kod sa stackoverflowa xD
+			public boolean include(Entry<? extends Object, ? extends Object> entry) {
+				if (entry.getModel() instanceof TellMeIfYouAreDeleted) {// ako je neka od tabela gde moze da se brise
+					TellMeIfYouAreDeleted t = (TellMeIfYouAreDeleted) entry.getModel();
+					// adminu se sve prikaze, ostalima samo ako nije izbriano
+					return Context.getInstance().getLogged().getType() == UserType.ADMINISTRATOR
+							|| !t.areYouDeleted((int) entry.getIdentifier());
+				}
+				return true;// u tabelema gde nema brisanja svima se sve prikaze
+			}
+		};
 	}
 
 }

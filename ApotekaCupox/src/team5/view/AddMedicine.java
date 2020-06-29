@@ -23,14 +23,16 @@ import javax.swing.JTextField;
 import team5.Utils;
 import team5.controller.MedicineController;
 import team5.controller.UserController;
+import team5.model.Context;
 import team5.model.Medicine;
 import team5.model.User;
 import team5.model.UserType;
 
 public class AddMedicine extends JDialog {
 	private ImageIcon iconHover, icon;
+	private Medicine med;
 
-	public AddMedicine() {
+	public AddMedicine(int selected) {
 		super();
 		setSize(500, 250);
 		setMinimumSize(new Dimension(500, 250));
@@ -38,8 +40,9 @@ public class AddMedicine extends JDialog {
 		setModal(true);
 
 		try {
-			icon = new ImageIcon(ImageIO.read(new File("./resources/icon/dodaj lek.png")));
-			iconHover = new ImageIcon(ImageIO.read(new File("./resources/icon/dodaj lek selekt.png")));
+			String path = selected != -1 ? "izmeni lek" : "dodaj lek";
+			icon = new ImageIcon(ImageIO.read(new File("./resources/icon/" + path + ".png")));
+			iconHover = new ImageIcon(ImageIO.read(new File("./resources/icon/" + path + " selekt.png")));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -61,6 +64,17 @@ public class AddMedicine extends JDialog {
 
 		JLabel recipelab = new JLabel("Na recept :");
 		JCheckBox recipeBox = new JCheckBox();
+		Medicine med = null;
+		if (selected != -1) {// ako je edit, onda popunimo siftu i zakljucamo
+			// i ostala polja popunimo ali ih ostavimo slobodnim za izmenu
+			med = Context.getInstance().getMedicine().get(selected);
+			idField.setText(med.getId());
+			idField.setEnabled(false);
+			proField.setText(med.getProducer());
+			priceField.setText("" + med.getPrice());// cast na string
+			nameField.setText(med.getTitle());
+			recipeBox.setSelected(med.isRecipe());
+		}
 
 		JButton insert = Utils.transparentButton(new JButton());
 		panel = new JPanel(new GridLayout(6, 2, 15, 5));
@@ -95,7 +109,7 @@ public class AddMedicine extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-	
+
 				String error = "";
 				String name = nameField.getText().trim();
 				String id = idField.getText().trim();
@@ -103,30 +117,49 @@ public class AddMedicine extends JDialog {
 				String manuf = proField.getText().trim();
 
 				boolean recipe = recipeBox.isSelected();
-
+				Medicine med = AddMedicine.this.med;
 				if (name.equals(""))
-					error += "Ime leka nije uneto\r\n";
+					if (selected == -1)// ako je seleced>=0 onda editujemo pa moze prazan jer ostaje prethodna vrenost
+						error += "Ime leka nije uneto\r\n";
+					else// edit mod=> ostaje staro ime ako je sada uneto prazno
+						name = med.getTitle();
+
 				if (id.equals(""))
 					error += "Sifra leka nije uneta\r\n";
 				if (price.equals(""))
-					error += "Cena leka nije uneta\r\n";
+					if (selected == -1)// ako je seleced>=0 onda editujemo pa moze prazan jer ostaje prethodna
+										// vrenost
+						error += "Cena leka nije uneta\r\n";
+					else// edit mod=> ostaje staro ime ako je sada uneto prazno
+						price = med.getPrice() + "";
 				Float pricef = null;
 				try {
 					pricef = Float.parseFloat(price);
+					if (pricef <= 0)
+						error += "Cena mora biti pozitivna\r\n";
 				} catch (NumberFormatException ex) {
 					error += "Cena nije u ispravnom formatu\r\n";
 				}
 				if (manuf.equals(""))
-					error += "Proizvodjac leka nije unet\r\n";
-				if (!MedicineController.checkId(id))
+					if (selected == -1)// ako je seleced>=0 onda editujemo pa moze prazan jer ostaje prethodna
+										// vrenost
+						error += "Proizvodjac leka nije unet\r\n";
+					else// edit mod=> ostaje staro ime ako je sada uneto prazno
+						manuf = med.getProducer();
+
+				if (selected == -1 && !MedicineController.checkId(id))
 					error += "Sifra leka vec postoji\r\n";
 				if (error.equals("")) {
-					MedicineController.insert(new Medicine(id, name, manuf, recipe, pricef));
+					if (selected == -1)
+						MedicineController.insert(new Medicine(id, name, manuf, recipe, pricef));
+					else
+						MedicineController.edit(new Medicine(id, name, manuf, recipe, pricef));
 					setVisible(false);
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, error, "Greska", JOptionPane.ERROR_MESSAGE);
 				}
+
 			}
 		});
 

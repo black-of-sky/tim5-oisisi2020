@@ -9,7 +9,7 @@ import team5.model.Context;
 import team5.model.User;
 import team5.model.UserType;
 
-public class UserAbstractTableModel extends AbstractTableModel {
+public class UserAbstractTableModel extends AbstractTableModel implements TellMeIfYouAreDeleted {
 
 	private static final long serialVersionUID = 2710362894062472488L;
 
@@ -22,8 +22,8 @@ public class UserAbstractTableModel extends AbstractTableModel {
 		kolone.add("name");
 		kolone.add("lastname");
 		kolone.add("type");
-		if (Context.getInstance().getLogged().getType() == UserType.ADMINISTRATOR)
-			kolone.add("removed");
+
+		kolone.add("removed");
 	}
 
 	public static UserAbstractTableModel getInstance() {
@@ -34,7 +34,7 @@ public class UserAbstractTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return columnIndex >= 4;
+		return columnIndex == 4;
 	}
 
 	@Override
@@ -101,6 +101,11 @@ public class UserAbstractTableModel extends AbstractTableModel {
 			return;
 		}
 		context.getUsers().get(rowIndex).setDeleted((boolean) aValue);
+	}
+
+	@Override
+	public boolean areYouDeleted(int row) {
+		return context.getUsers().get(row).isDeleted();
 	}
 
 }

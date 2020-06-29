@@ -27,7 +27,7 @@ public class CartAbstactTableModel extends AbstractTableModel {
 		kolone.add("quantity");
 		kolone.add("total_price");
 		instance = this;
-		context.setCurrentCart(new LinkedList<BillItem>());
+		//context.setCurrentCart(new LinkedList<BillItem>());
 	}
 
 	public static CartAbstactTableModel getInstance() {

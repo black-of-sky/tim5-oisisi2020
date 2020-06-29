@@ -22,13 +22,13 @@ import team5.view.MainFrame;
 import team5.view.SortDialog;
 
 public class DisplayMedicineAction extends AbstractAction {
-	public DisplayMedicineAction() {
+	public DisplayMedicineAction(boolean selected) {
 		putValue(NAME, "");
 		// putValue(MNEMONIC_KEY, KeyEvent.VK_Q);
 		putValue(SHORT_DESCRIPTION, "Lekovi");
 
 		try {
-			Image im = ImageIO.read(new File("./resources/icon/lekovi.png"));
+			Image im = ImageIO.read(new File("./resources/icon/lekovi" + (selected ? " selektovano" : "") + ".png"));
 			putValue(LARGE_ICON_KEY, new ImageIcon(im.getScaledInstance(96, 96, Image.SCALE_DEFAULT)));
 			// putValue(SMALL_ICON, new ImageIcon(im.getScaledInstance(96, 96,
 			// Image.SCALE_DEFAULT)));
@@ -54,18 +54,18 @@ public class DisplayMedicineAction extends AbstractAction {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		SortDialog d = new SortDialog(buttons);
 		d.setVisible(true);
-		int direction=d.cb.getState()?0:1;
-		
+		int direction = d.cb.getState() ? 0 : 1;
+
 		JButton clicked = d.getClicked();
 		if (clicked == null)
 			return;
-		Map<String,Integer> map=new HashMap<>();
+		Map<String, Integer> map = new HashMap<>();
 		map.put("col", buttons.indexOf(clicked));
 		map.put("direction", direction);
-		
+
 		MainFrame.getInstance().processEvent(Event.SHOW_MEDICINE, map);
 	}
 
