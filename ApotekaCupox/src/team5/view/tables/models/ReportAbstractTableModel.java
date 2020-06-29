@@ -20,12 +20,19 @@ public class ReportAbstractTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 2710362894062472488L;
 	private static Context context = Context.getInstance();
 	private List<String> kolone = new ArrayList<String>();
+	private static ReportAbstractTableModel instance;
 
 	private ReportAbstractTableModel() {
 		kolone.add("med_id");
-		kolone.add("med_name");
+		kolone.add("med_title");
 		kolone.add("quantity");
 		kolone.add("total_price");
+	}
+
+	public static ReportAbstractTableModel getInstance() {
+		if (instance == null)
+			instance = new ReportAbstractTableModel();
+		return instance;
 	}
 
 	@Override

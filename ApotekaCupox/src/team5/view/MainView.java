@@ -30,19 +30,23 @@ import javax.swing.event.DocumentListener;
 
 import team5.Utils;
 import team5.controller.CartController;
+import team5.controller.ReportsController;
 import team5.controller.actions.AddMedicineAction;
 import team5.controller.actions.AddUserAction;
 import team5.model.Bill;
+import team5.model.Context;
 import team5.model.Medicine;
 import team5.model.Prescription;
+import team5.model.ReportItem;
 import team5.model.User;
 import team5.view.tables.TableFactory;;
 
 public class MainView extends JPanel {
 	private static MainView activeInstance;
-	private JLabel price;
-	private JLabel discount;
+	private JLabel price;// za isvestaj je ovo kolicina lekova, ya korpu cena
+	private JLabel discount;// ya izvestaj je profit, za korpu popust
 	private JTextField field;
+	private JLabel reportInfo;
 
 	public MainView(ViewType viewtype, int colSort, int direction) {
 		activeInstance = this;
@@ -79,7 +83,7 @@ public class MainView extends JPanel {
 		c2.gridx = 0;
 		c2.anchor = GridBagConstraints.BASELINE_LEADING;
 		c2.gridy = 0;
-		c2.weighty = 2;
+		c2.weighty = 1;
 		c2.weightx = 1;
 		if (viewtype != ViewType.NONE) {
 
@@ -96,6 +100,24 @@ public class MainView extends JPanel {
 			 * tableTitle.add(price, c2); c2.gridy = 1; c2.weighty = 1;
 			 */
 			tableTitle.add(getCartPanel(), c2);
+
+		} else if (viewtype == ViewType.REPORTS) {
+			c2.fill = GridBagConstraints.BOTH;
+			c2.anchor = GridBagConstraints.CENTER;
+			reportInfo = new JLabel();
+			discount = new JLabel();
+			price = new JLabel();
+			updateReportInfo();
+			c2.gridwidth = 2;
+			tableTitle.add(reportInfo, c2);
+			c2.fill = GridBagConstraints.NONE;
+			c2.gridwidth = 1;
+			c2.gridx = 0;
+			c2.gridy = 1;
+			tableTitle.add(price, c2);
+			c2.gridx = 1;
+			c2.gridy = 1;
+			tableTitle.add(discount, c2);
 
 		}
 		tableTitle.setBackground(new Color(255, 254, 223));
@@ -131,6 +153,10 @@ public class MainView extends JPanel {
 			price = new JLabel("Ukupno: 0");
 			price.setFont(new Font("arial", Font.PLAIN, 25));
 			table = TableFactory.getTable(Bill.class);
+			break;
+		case REPORTS:
+
+			table = TableFactory.getTable(ReportItem.class);
 			break;
 
 		}
@@ -216,6 +242,20 @@ public class MainView extends JPanel {
 
 	public String getBuyer() {
 		return field.getText();
+	}
+
+	public void updateReportInfo() {
+		String text = Context.getInstance().getReportFor();
+		if (!text.equals("")) {
+			Font f = new Font("arial", Font.PLAIN, 25);
+			price.setFont(f);
+			discount.setFont(f);
+			reportInfo.setFont(f);
+			reportInfo.setText("Izvestaj" + text);
+			price.setText("Kolicina:" + ReportsController.getTotalQuantity());
+			discount.setText("Zarada: " + ReportsController.getTotalProfit());
+		}
+
 	}
 
 }

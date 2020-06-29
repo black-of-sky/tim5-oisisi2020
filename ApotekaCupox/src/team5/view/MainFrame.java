@@ -38,14 +38,15 @@ public class MainFrame extends JFrame {
 	}
 
 	public void processEvent(Event e, Object o) {
+
+		getContentPane().removeAll();
+
 		switch (e) {
 		case LOGIN_PRESSED:
-			getContentPane().removeAll();
 			getContentPane().add(new LandingView(PanelType.LOGIN), BorderLayout.CENTER);
 
 			break;
 		case LOOGED_IN:
-			getContentPane().removeAll();
 			add(new MainView(ViewType.NONE, 0, 0), BorderLayout.CENTER);
 
 			break;
@@ -53,33 +54,31 @@ public class MainFrame extends JFrame {
 			System.exit(1);
 			break;
 		case LOGGED_OUT:
-			getContentPane().removeAll();
 			getContentPane().add(new LandingView(PanelType.LANDING), BorderLayout.CENTER);
 			break;
 		case SHOW_MEDICINE:
-			getContentPane().removeAll();
 			Map<String, Integer> map = (Map<String, Integer>) o;
 
 			add(new MainView(ViewType.MEDICINE, map.get("col"), map.get("direction")), BorderLayout.CENTER);
 			break;
 		case SHOW_USERS:
-			getContentPane().removeAll();
 			Map<String, Integer> map2 = (Map<String, Integer>) o;
 			add(new MainView(ViewType.USERS, map2.get("col"), map2.get("direction")), BorderLayout.CENTER);
 
 			break;
 		case SHOW_RECIPES:
-			getContentPane().removeAll();
 			Map<String, Integer> map3 = (Map<String, Integer>) o;
 			add(new MainView(ViewType.RECIPES, map3.get("col"), map3.get("direction")), BorderLayout.CENTER);
 
 			break;
 		case SHOW_CART:
-			getContentPane().removeAll();
-			add(new MainView(ViewType.CART,0,0), BorderLayout.CENTER);
+			add(new MainView(ViewType.CART, 0, 0), BorderLayout.CENTER);
 
 			break;
+		case SHOW_REPORTS:
+			add(new MainView(ViewType.REPORTS, 0, 0), BorderLayout.CENTER);
 
+			break;
 		default:
 			break;
 		}

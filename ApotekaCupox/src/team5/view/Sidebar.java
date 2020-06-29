@@ -20,6 +20,7 @@ import team5.controller.CartController;
 import team5.controller.actions.AddMedicineAction;
 import team5.controller.actions.AddPerscriptionAction;
 import team5.controller.actions.AddUserAction;
+import team5.controller.actions.ShowAllReportsAction;
 
 public class Sidebar extends JPanel {
 	private JTable table;
@@ -95,7 +96,7 @@ public class Sidebar extends JPanel {
 			}
 
 			jb3.addMouseListener(new IconChanger((ImageIcon) jb3.getIcon(), hoverr, jb3));
-			
+
 			c.gridy = 7;
 			add(jb3, c);
 			break;
@@ -147,6 +148,21 @@ public class Sidebar extends JPanel {
 			});
 			c.gridy = 4;
 			add(jb3, c);
+			break;
+		case REPORTS:
+			JButton all = Utils.transparentButton(new JButton(new ShowAllReportsAction()));// full report
+			
+			ImageIcon hoverProducer = null;
+			try {
+				Image im = ImageIO.read(new File("./resources/icon/registracija selekt.png"));
+				hoverProducer = new ImageIcon(im.getScaledInstance(96, 48, Image.SCALE_DEFAULT));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			all.addMouseListener(new IconChanger((ImageIcon) all.getIcon(), hoverProducer, all));
+			add(all, c);
+			break;
 
 		}
 	}

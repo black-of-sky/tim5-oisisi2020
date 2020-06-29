@@ -1,12 +1,14 @@
 package team5.controller;
 
 import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
 import team5.model.Bill;
 import team5.model.BillItem;
 import team5.model.Context;
 import team5.model.Medicine;
 import team5.model.ReportItem;
+import team5.view.tables.models.ReportAbstractTableModel;
 
 public class ReportsController {
 	private ReportsController() {
@@ -44,6 +46,8 @@ public class ReportsController {
 				}
 			}
 		}
+		Context.getInstance().setCurrentReport(ret);
+		ReportAbstractTableModel.getInstance().fireTableDataChanged();
 		return ret;
 	}
 
@@ -57,5 +61,22 @@ public class ReportsController {
 
 	public static LinkedHashMap<String, ReportItem> getByProducer(String prod) {
 		return getReport(prod, null);// bitan prizvodjac
+	}
+
+	public static float getTotalProfit() {
+		float f = 0;
+		for (ReportItem r : Context.getInstance().getCurrentReport().values()) {
+			f += r.getTotalPrice();
+		}
+		return f;
+	}
+
+	public static int getTotalQuantity() {
+		int total = 0;
+		for (ReportItem r : Context.getInstance().getCurrentReport().values()) {
+			total += r.getQuantity();
+		}
+
+		return total;
 	}
 }

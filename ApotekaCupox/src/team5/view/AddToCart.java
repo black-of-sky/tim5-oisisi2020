@@ -32,7 +32,7 @@ public class AddToCart extends JDialog {
 		ImageIcon im = null, hover = null;
 		try {
 			Image ima = ImageIO.read(new File("./resources/icon/dodaj.png"));
-			im = new ImageIcon(ima.getScaledInstance(96, 96, Image.SCALE_DEFAULT));
+			im = new ImageIcon(ima.getScaledInstance(96, 48, Image.SCALE_DEFAULT));
 			ima = ImageIO.read(new File("./resources/icon/dodaj selekt.png"));
 			hover = new ImageIcon(ima.getScaledInstance(96, 48, Image.SCALE_DEFAULT));
 		} catch (Exception e) {
