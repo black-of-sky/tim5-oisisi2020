@@ -1,6 +1,10 @@
 package team5.model;
 
-public class User {
+import java.io.Serializable;
+
+import team5.Utils;
+
+public class User implements Serializable {
 	private String username, password, fName, lName;
 	private UserType type;
 	private boolean deleted = false;
@@ -58,7 +62,9 @@ public class User {
 	}
 
 	public void setDeleted(boolean deleted) {
+
 		this.deleted = deleted;
+		Utils.saveMeToFilePlease(Context.getInstance().getUsers(), "./data/users.data");
 	}
 
 }

@@ -43,7 +43,7 @@ public class MedicineInPrescriptionAbstactTableModel extends AbstractTableModel 
 	@Override
 	public int getRowCount() {
 		if (index != -1)
-			return context.getPrescription().get(index).getQuantity().size();
+			return context.getPrescriptions().get(index).getQuantity().size();
 		return context.getRecipeBeingCreated().getQuantity().size();
 	}
 
@@ -78,7 +78,7 @@ public class MedicineInPrescriptionAbstactTableModel extends AbstractTableModel 
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		LinkedHashMap<String, Integer> r ;
 		if(index!=-1)
-		 r = context.getPrescription().get(index).getQuantity();
+		 r = context.getPrescriptions().get(index).getQuantity();
 		else 
 			r = context.getRecipeBeingCreated().getQuantity();
 		int i = 0;

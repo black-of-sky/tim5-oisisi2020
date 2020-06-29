@@ -4,15 +4,20 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
 import java.awt.Insets;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JSplitPane;
 import javax.swing.RowFilter;
-import javax.swing.RowFilter.Entry;
 
 import team5.model.Context;
 import team5.model.UserType;
@@ -94,6 +99,45 @@ public class Utils {
 				return true;// u tabelema gde nema brisanja svima se sve prikaze
 			}
 		};
+	}
+
+	public static void saveMeToFilePlease(Object what, String where) {
+		File f = new File(where);
+		ObjectOutputStream objOutStream = null;
+		try {
+			objOutStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+			objOutStream.writeObject(what);
+		} catch (IOException e1) {
+		//	e1.printStackTrace();
+		} finally {
+
+			try {
+				if (objOutStream != null)
+					objOutStream.close();
+			} catch (Exception e) {
+			//	e.printStackTrace();
+			}
+		}
+	}
+
+	public static Object loadMeFromFilePlease(String where) {
+		File f = new File(where);
+		ObjectInputStream objInStream = null;
+		Object ret = null;
+		try {
+			objInStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)));
+			ret = objInStream.readObject();
+		} catch (Exception e) {
+		//	e.printStackTrace();
+		} finally {
+			try {
+				if (objInStream != null)
+					objInStream.close();
+			} catch (Exception e) {
+				//e.printStackTrace();
+			}
+		}
+		return ret;
 	}
 
 }

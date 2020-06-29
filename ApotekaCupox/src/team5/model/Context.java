@@ -6,6 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.rmi.CORBA.Util;
+
+import team5.Utils;
+
 public class Context {
 
 	private static Context instance = null;
@@ -26,26 +30,38 @@ public class Context {
 	private String reportFor = ""; // kojo se izvestaj trenutnog prikazyuje (ovo se prikazuje iznad tabele)
 
 	private Context() {
-		users = new LinkedList<User>();
-		User user = new User("admin", "admin", "admin", "admin", UserType.ADMINISTRATOR);
-		users.add(user);
+		users = (List<User>) Utils.loadMeFromFilePlease("./users.data");
+		if (users == null) {
+			users = new LinkedList<User>();
+			User user = new User("admin", "admin", "admin", "admin", UserType.ADMINISTRATOR);
+			users.add(user);
+		/*	User user2 = new User("dummy", "dummy", "dummy", "dummy", UserType.LEKAR);
+			users.add(user2);
+			User user3 = new User("asd", "asd", "asd", "asd", UserType.APOTEKAR);
+			users.add(user3);*/
+		}
 
-		User user2 = new User("dummy", "dummy", "dummy", "dummy", UserType.LEKAR);
-		users.add(user2);
+		medicine = (List<Medicine>) Utils.loadMeFromFilePlease("./medicine.data");
+		if (medicine == null) {
+			medicine = new LinkedList<Medicine>();
+			// medicine.add(new Medicine("nemacka medecina", "je najbolja", "na svetu",
+			// false, 22));
+			// medicine.add(new Medicine("ubice ga", " bili", "ko zeca", false, 22.145f));
 
-		User user3 = new User("asd", "asd", "asd", "asd", UserType.APOTEKAR);
-		users.add(user3);
-		medicine = new LinkedList<Medicine>();
-		medicine.add(new Medicine("nemacka medecina", "je najbolja", "na svetu", false, 22));
-		medicine.add(new Medicine("ubice ga", " bili", "ko zeca", false, 22.145f));
-		prescriptions = new LinkedList<Prescription>();
-		LinkedHashMap<String, Integer> ma = new LinkedHashMap<>();
-		ma.put("ubice ga", 12);
-		ma.put("nemacka medecina", 3);
-		Prescription r = new Prescription(1, "aasd", "0120135", new Date(), ma);
-		prescriptions.add(r);
+		}
+		prescriptions = (List<Prescription>) Utils.loadMeFromFilePlease("./prescriptions.data");
+		if (prescriptions == null) {
+			prescriptions = new LinkedList<Prescription>();
+			/*
+			 * LinkedHashMap<String, Integer> ma = new LinkedHashMap<>(); ma.put("ubice ga",
+			 * 12); ma.put("nemacka medecina", 3); Prescription r = new Prescription(1,
+			 * "aasd", "0120135", new Date(), ma); prescriptions.add(r);
+			 */
 
-		bills = new LinkedList<>();
+		}
+		bills = (List<Bill>) Utils.loadMeFromFilePlease("./bills.data");
+		if (bills == null)
+			bills = new LinkedList<>();
 
 		reset();
 	}
@@ -110,10 +126,6 @@ public class Context {
 
 	public void setMedicine(List<Medicine> medicine) {
 		this.medicine = medicine;
-	}
-
-	public List<Prescription> getPrescription() {
-		return prescriptions;
 	}
 
 	public List<Prescription> getPrescriptions() {

@@ -3,6 +3,9 @@ package team5.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.rmi.CORBA.Util;
+
+import team5.Utils;
 import team5.model.Context;
 import team5.model.User;
 import team5.model.UserType;
@@ -64,6 +67,7 @@ public class UserController {
 		Context.getInstance().getUsers().add(user);
 		int row = Context.getInstance().getUsers().size() - 1;
 		UserAbstractTableModel.getInstance().fireTableRowsInserted(row, row);
+		Utils.saveMeToFilePlease(Context.getInstance().getUsers(), "./users.data");
 	}
 
 	public static String[] getAllPharmacist() {

@@ -1,5 +1,6 @@
 package team5;
 
+import team5.model.Context;
 import team5.view.MainFrame;
 
 import java.awt.Color;
@@ -12,7 +13,7 @@ public class MyFancyApp {
 		//TODO BOJE ZA JOPTION PANE
 		UIManager.put("OptionPane.background", new ColorUIResource(new Color(255, 254, 223)));
 		UIManager.put("Panel.background", new ColorUIResource(new Color(255, 254, 223)));
-		
+		Context.getInstance();//da ucita podatke iz fajlova
 		MainFrame mf = MainFrame.getInstance();
 		mf.setSize(800, 600);
 		mf.setLocationRelativeTo(null);

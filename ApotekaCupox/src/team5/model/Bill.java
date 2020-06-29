@@ -1,9 +1,10 @@
 package team5.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Bill {
+public class Bill implements Serializable {
 	private String buyer,soldBy;// //kupacsoldBy-apotekar koji ga je prodao;
 	private Date date;
 	private int discountPerc;//popust, procenat

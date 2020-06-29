@@ -1,9 +1,12 @@
 package team5.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedHashMap;
 
-public class Prescription {
+import team5.Utils;
+
+public class Prescription implements Serializable{
 	private int id;
 	private String doctor, jmbg;
 	private Date date;
@@ -26,7 +29,7 @@ public class Prescription {
 		this.jmbg = jmbg;
 		removed = false;
 		this.date = date;
-		this.quantity = quantity!=null?quantity:new LinkedHashMap<String, Integer>();
+		this.quantity = quantity != null ? quantity : new LinkedHashMap<String, Integer>();
 	}
 
 	public int getId() {
@@ -75,6 +78,7 @@ public class Prescription {
 
 	public void setRemoved(boolean removed) {
 		this.removed = removed;
+		Utils.saveMeToFilePlease(Context.getInstance().getPrescriptions(), "./data/prescriptions.data");
 	}
 
 }

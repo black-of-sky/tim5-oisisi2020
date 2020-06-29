@@ -1,6 +1,10 @@
 package team5.model;
 
-public class Medicine {
+import java.io.Serializable;
+
+import team5.Utils;
+
+public class Medicine implements Serializable {
 	private String id, title, producer;
 	private boolean recipe;
 	private float price;
@@ -60,13 +64,12 @@ public class Medicine {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+		Utils.saveMeToFilePlease(Context.getInstance().getMedicine(), "./data/medicine.data"); // CUVANJE
 	}
 
 	@Override
 	public String toString() {
-		return getTitle()+" ("+getId()+")";
+		return getTitle() + " (" + getId() + ")";
 	}
-	
-	
 
 }

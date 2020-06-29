@@ -1,6 +1,8 @@
 package team5.model;
 
-public class BillItem {
+import java.io.Serializable;
+
+public class BillItem implements Serializable {
 	private String medicineId, prescription;// prescription=id recepta (ako je dodato sa recepta),
 
 	private int quantity;

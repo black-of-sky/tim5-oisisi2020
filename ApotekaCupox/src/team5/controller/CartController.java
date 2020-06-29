@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import team5.Utils;
 import team5.model.Bill;
 import team5.model.BillItem;
 import team5.model.Context;
@@ -58,7 +59,7 @@ public class CartController {
 	}
 
 	public static boolean addPrescription(String id) {
-		for (Prescription p : Context.getInstance().getPrescription()) {
+		for (Prescription p : Context.getInstance().getPrescriptions()) {
 			if (p.isRemoved() || !id.equals(p.getId() + ""))// kastuje se int na string sa +""
 				continue;
 			for (Entry<String, Integer> pair : p.getQuantity().entrySet()) {
@@ -116,6 +117,8 @@ public class CartController {
 		b.setSoldBy(Context.getInstance().getLogged().getUsername());
 		Context.getInstance().getBills().add(b);
 		Context.getInstance().setCurrentCart(new LinkedList<>());
+		Utils.saveMeToFilePlease(Context.getInstance().getBills(), "./bills.data");
+
 		return true;
 	}
 

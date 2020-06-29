@@ -1,5 +1,7 @@
 package team5.model;
 
-public enum UserType {
+import java.io.Serializable;
+
+public enum UserType implements Serializable {
 	LEKAR, APOTEKAR, ADMINISTRATOR
 }

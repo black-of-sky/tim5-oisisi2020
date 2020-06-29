@@ -3,6 +3,7 @@ package team5.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import team5.Utils;
 import team5.model.Context;
 import team5.model.Medicine;
 import team5.view.tables.models.MedicineAbstractTableModel;
@@ -33,6 +34,8 @@ public class MedicineController {
 		Context.getInstance().getMedicine().add(med);
 		int row = Context.getInstance().getMedicine().size() - 1;
 		MedicineAbstractTableModel.getInstance().fireTableRowsInserted(row, row);
+		Utils.saveMeToFilePlease(Context.getInstance().getMedicine(), "./medicine.data");
+
 	}
 
 	public static Medicine getById(String key) {

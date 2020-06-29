@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import team5.Utils;
 import team5.model.Context;
 import team5.model.Medicine;
 import team5.model.Prescription;
@@ -33,17 +34,18 @@ public class RecipeController {
 		rec.setDate(new Date());
 		rec.setDoctor(Context.getInstance().getLogged().getUsername());
 		rec.setJmbg(jmbg);
-		rec.setId(Context.getInstance().getPrescription().size());
-		Context.getInstance().getPrescription().add(rec);
+		rec.setId(Context.getInstance().getPrescriptions().size());
+		Context.getInstance().getPrescriptions().add(rec);
 		int row = Context.getInstance().getMedicine().size() - 1;
 		PrescriptionAbstractTableModel.getInstance().fireTableRowsInserted(row, row);
+		Utils.saveMeToFilePlease(Context.getInstance().getPrescriptions(), "./prescriptions.data");
 	}
 
 	public static float getTotalPrice(int index) {
 		float total = 0;
 		Set<Entry<String, Integer>> set;
 		if (index != -1)
-			set = Context.getInstance().getPrescription().get(index).getQuantity().entrySet();
+			set = Context.getInstance().getPrescriptions().get(index).getQuantity().entrySet();
 		else
 			set = Context.getInstance().getRecipeBeingCreated().getQuantity().entrySet();
 

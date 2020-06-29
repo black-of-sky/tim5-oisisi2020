@@ -36,7 +36,7 @@ public class PrescriptionAbstractTableModel extends AbstractTableModel implement
 
 	@Override
 	public int getRowCount() {
-		return context.getPrescription().size();
+		return context.getPrescriptions().size();
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class PrescriptionAbstractTableModel extends AbstractTableModel implement
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Prescription r = context.getPrescription().get(rowIndex);
+		Prescription r = context.getPrescriptions().get(rowIndex);
 		switch (columnIndex) {
 		case 0:
 			return r.getId();
@@ -107,12 +107,12 @@ public class PrescriptionAbstractTableModel extends AbstractTableModel implement
 		if (columnIndex != 5) {
 			return;
 		}
-		context.getPrescription().get(rowIndex).setRemoved((boolean) aValue);
+		context.getPrescriptions().get(rowIndex).setRemoved((boolean) aValue);
 	}
 
 	@Override
 	public boolean areYouDeleted(int row) {
-		return context.getPrescription().get(row).isRemoved();
+		return context.getPrescriptions().get(row).isRemoved();
 	}
 
 }
