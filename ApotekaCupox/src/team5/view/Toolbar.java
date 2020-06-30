@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import team5.Utils;
+import team5.controller.Event;
 import team5.controller.actions.DisplayCartAction;
 import team5.controller.actions.DisplayMedicineAction;
 import team5.controller.actions.DisplayRecipesAction;
@@ -41,11 +44,19 @@ public class Toolbar extends JPanel {
 		JPanel items = new JPanel();
 		logoPanel.setBackground(new Color(255, 139, 104));
 		items.setBackground(new Color(255, 139, 104));
-		logoPanel.add(new JLabel(im));
+		JButton l = Utils.transparentButton(new JButton(im));
+		logoPanel.add(l);
+		l.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainFrame.getInstance().processEvent(Event.SHOW_HOME, null);
+			}
+		});
 
 		items.add(Utils.transparentButton(new JButton(new DisplayMedicineAction(view == ViewType.MEDICINE))));
 		if (u.getType() != UserType.APOTEKAR)
-			items.add(Utils.transparentButton(new JButton(new DisplayRecipesAction(view == ViewType.RECIPES))));
+			items.add(Utils.transparentButton(new JButton(new DisplayRecipesAction(view == ViewType.PRESCRIPTION))));
 
 		switch (u.getType()) {
 		case ADMINISTRATOR:

@@ -51,7 +51,7 @@ public class Sidebar extends JPanel {
 			jb.addMouseListener(new IconChanger((ImageIcon) jb.getIcon(), hover, jb));
 			add(jb, c);
 			JButton jbShowMOre = Utils.transparentButton(new JButton(new ShowAdditionalInfoAction(table)));
-			hover = Utils.getImageicon("./resources/icon/registracija selekt.png");
+			hover = Utils.getImageicon("./resources/icon/detalji selekt.png");
 			jbShowMOre.addMouseListener(new IconChanger((ImageIcon) jbShowMOre.getIcon(), hover, jbShowMOre));
 			c.gridy--;
 			add(jbShowMOre, c);
@@ -101,8 +101,11 @@ public class Sidebar extends JPanel {
 			}
 
 			break;
-		case RECIPES:
-			JButton jb3 = new JButton("detalji");
+		case PRESCRIPTION:
+
+			JButton jb3 = Utils.transparentButton(new JButton(Utils.getImageicon("./resources/icon/detalji.png")));
+			jb3.addMouseListener(new IconChanger((ImageIcon) jb3.getIcon(),
+					Utils.getImageicon("./resources/icon/detalji selekt.png"), jb3));
 			jb3.addActionListener(new ActionListener() {
 
 				@Override
@@ -186,7 +189,7 @@ public class Sidebar extends JPanel {
 			break;
 		case REPORTS:
 			JButton all = Utils.transparentButton(new JButton(new ShowAllReportsAction()));// full report
-			ImageIcon hoverall = Utils.getImageicon("./resources/icon/registracija selekt.png");// TODO slika
+			ImageIcon hoverall = Utils.getImageicon("./resources/icon/IZVESTAJ ZA SVE LEKOVE SELEKT.png");
 			all.addMouseListener(new IconChanger((ImageIcon) all.getIcon(), hoverall, all));
 			add(all, c);
 

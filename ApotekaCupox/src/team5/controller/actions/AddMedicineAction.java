@@ -14,8 +14,6 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
 import team5.view.AddMedicine;
-import team5.view.tables.GenericTable;
-import team5.view.tables.models.MedicineAbstractTableModel;
 
 public class AddMedicineAction extends AbstractAction {
 	private boolean edit;

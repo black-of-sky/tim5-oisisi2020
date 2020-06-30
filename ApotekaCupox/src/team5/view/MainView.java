@@ -55,12 +55,11 @@ public class MainView extends JPanel {
 		JPanel bottom = new JPanel();
 		bottom.setLayout(new BorderLayout());
 		bottom.setBackground(new Color(255, 210, 181));
-		bottom.setLayout(new BorderLayout());
 		bottom.setBorder(new EmptyBorder(25, 25, 0, 25));
 		JTable table = getTable(viewtype);
 		this.table = table;
 		SortOrder ord = direction == 1 ? SortOrder.ASCENDING : SortOrder.DESCENDING;
-		JScrollPane jsp = new JScrollPane(table == null ? new JPanel() : table);
+		JScrollPane jsp = new JScrollPane(table == null ? new HomePageImageDrawer() : table);
 		if (viewtype == viewtype.NONE)
 			jsp.setBorder(null); // da ne crta okvi oko tabele ako ona ne postoji
 		tableview.add(jsp);
@@ -75,7 +74,12 @@ public class MainView extends JPanel {
 		tableview.setBorder(new EmptyBorder(0, 15, 15, 0));
 		tableview.setBackground(new Color(255, 254, 223));
 		JSplitPane splitPane = Utils.createSplitPane(toolbar, bottom, 0, 100, JSplitPane.VERTICAL_SPLIT);
-
+	if (viewtype == ViewType.NONE) {
+			bottom.setLayout(new BorderLayout());
+			bottom.add(new HomePageImageDrawer(), BorderLayout.CENTER);
+			add(splitPane, BorderLayout.CENTER);
+			return;
+		}
 		JPanel tableTitle = new JPanel();
 		tableTitle.setLayout(new GridBagLayout());
 		GridBagConstraints c2 = new GridBagConstraints();
@@ -85,6 +89,8 @@ public class MainView extends JPanel {
 		c2.weighty = 1;
 		c2.weightx = 1;
 		if (viewtype != ViewType.NONE) {
+			if (viewtype == viewtype.REPORTS)
+				c2.gridheight = 2;// za reports imamo dva reda, pa mora da logo zauzme oba
 			ImageIcon ic = Utils.getImageForTable(viewtype);
 			tableTitle.setBorder(new EmptyBorder(5, 10, 5, 10));
 			tableTitle.add(new JLabel(ic), c2);
@@ -98,6 +104,7 @@ public class MainView extends JPanel {
 			tableTitle.add(getCartPanel(), c2);
 
 		} else if (viewtype == ViewType.REPORTS) {
+			c2.gridheight = 1;
 			c2.fill = GridBagConstraints.BOTH;
 			c2.anchor = GridBagConstraints.CENTER;
 			reportInfo = new JLabel();
@@ -105,21 +112,22 @@ public class MainView extends JPanel {
 			price = new JLabel();
 			updateReportInfo();
 			c2.gridwidth = 2;
+			c2.gridx = 1;
 			tableTitle.add(reportInfo, c2);
 			c2.fill = GridBagConstraints.NONE;
 			c2.gridwidth = 1;
-			c2.gridx = 0;
+			c2.gridx = 1;
 			c2.gridy = 1;
 			tableTitle.add(price, c2);
-			c2.gridx = 1;
+			c2.gridx = 2;
 			tableTitle.add(discount, c2);
 		} else if (viewtype != ViewType.NONE && viewtype != ViewType.USERS) {// znaci se osim none reports,users i cart
 																				// ima pretragu
 			c2.gridy = 0;
 			c2.gridx = 1;
-			c2.fill=GridBagConstraints.BOTH;
-			JButton serc=Utils.transparentButton(new JButton(new DisplaySearchAction(viewtype)));
-			ImageIcon iconHover=Utils.getImageicon("./resources/icon/pretraga selekt.png");
+			c2.fill = GridBagConstraints.BOTH;
+			JButton serc = Utils.transparentButton(new JButton(new DisplaySearchAction(viewtype)));
+			ImageIcon iconHover = Utils.getImageicon("./resources/icon/pretraga selekt.png");
 			serc.addMouseListener(new IconChanger((ImageIcon) serc.getIcon(), iconHover, serc));
 			tableTitle.add(serc, c2);
 		}
@@ -149,7 +157,7 @@ public class MainView extends JPanel {
 		case USERS:
 			table = TableFactory.getTable(User.class);
 			break;
-		case RECIPES:
+		case PRESCRIPTION:
 			table = TableFactory.getTable(Prescription.class);
 			break;
 		case CART:

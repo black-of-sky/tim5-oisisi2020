@@ -22,7 +22,7 @@ public class ShowAllReportsAction extends AbstractAction {
 		putValue(SHORT_DESCRIPTION, "Prikazi sve");
 
 		try {
-			Image im = ImageIO.read(new File("./resources/icon/dodaj.png"));
+			Image im = ImageIO.read(new File("./resources/icon/IZVESTAJ ZA SVE LEKOVE.png"));
 			putValue(LARGE_ICON_KEY, new ImageIcon(im.getScaledInstance(96, 48, Image.SCALE_DEFAULT)));
 
 		} catch (IOException e) {

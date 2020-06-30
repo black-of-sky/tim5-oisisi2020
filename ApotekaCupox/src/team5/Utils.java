@@ -23,7 +23,6 @@ import javax.swing.RowFilter;
 import team5.model.Context;
 import team5.model.Prescription;
 import team5.model.UserType;
-import team5.view.PrescriptionContent;
 import team5.view.ViewType;
 import team5.view.tables.models.MedicineAbstractTableModel;
 import team5.view.tables.models.PrescriptionAbstractTableModel;
@@ -59,14 +58,15 @@ public class Utils {
 		case USERS:
 
 			break;
-		case RECIPES:
+		case PRESCRIPTION:
 
 			break;
 		case MEDICINE:
 
 			break;
 		default:
-			return null;
+			break;
+			//return null;
 		}
 
 		Image im;

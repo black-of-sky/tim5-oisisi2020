@@ -11,9 +11,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
-import team5.controller.Event;
 import team5.view.AddUser;
-import team5.view.MainFrame;
 
 public class AddUserAction extends AbstractAction {
 	public AddUserAction() {

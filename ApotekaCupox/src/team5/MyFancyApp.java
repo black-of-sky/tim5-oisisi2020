@@ -1,12 +1,12 @@
 package team5;
 
-import team5.model.Context;
-import team5.view.MainFrame;
-
 import java.awt.Color;
 
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
+
+import team5.model.Context;
+import team5.view.MainFrame;
 
 public class MyFancyApp {
 	public static void main(String[] args) {

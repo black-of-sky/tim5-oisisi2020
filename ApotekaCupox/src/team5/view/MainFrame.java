@@ -47,9 +47,12 @@ public class MainFrame extends JFrame {
 			getContentPane().add(new LandingView(PanelType.LOGIN), BorderLayout.CENTER);
 
 			break;
+		case SHOW_HOME:
+			add(new MainView(ViewType.NONE, 0, 0), BorderLayout.CENTER);
+			break;
 		case LOOGED_IN:
 			add(new MainView(ViewType.NONE, 0, 0), BorderLayout.CENTER);
-			Context.getInstance().reset();//restratruje parametre, ako je ostalo od prethodnog ko je bio ulogovan
+			Context.getInstance().reset();// restratruje parametre, ako je ostalo od prethodnog ko je bio ulogovan
 			break;
 		case SHUT_DOWN:
 			System.exit(1);
@@ -59,7 +62,6 @@ public class MainFrame extends JFrame {
 			break;
 		case SHOW_MEDICINE:
 			Map<String, Integer> map = (Map<String, Integer>) o;
-
 			add(new MainView(ViewType.MEDICINE, map.get("col"), map.get("direction")), BorderLayout.CENTER);
 			break;
 		case SHOW_USERS:
@@ -69,7 +71,7 @@ public class MainFrame extends JFrame {
 			break;
 		case SHOW_RECIPES:
 			Map<String, Integer> map3 = (Map<String, Integer>) o;
-			add(new MainView(ViewType.RECIPES, map3.get("col"), map3.get("direction")), BorderLayout.CENTER);
+			add(new MainView(ViewType.PRESCRIPTION, map3.get("col"), map3.get("direction")), BorderLayout.CENTER);
 
 			break;
 		case SHOW_CART:

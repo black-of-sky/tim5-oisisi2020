@@ -124,6 +124,13 @@ public class GenericTable extends JTable {
 				case "rec_id":
 					im = ImageIO.read(new File("./resources/icon/SIFRA.png"));
 					break;
+				case "removed":
+					im = ImageIO.read(new File("./resources/icon/izbrisan.png"));
+					break;
+				case "quantity":
+					im = ImageIO.read(new File("./resources/icon/KOLICINA.png"));
+					break;
+				
 				
 				}
 

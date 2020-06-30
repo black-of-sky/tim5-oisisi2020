@@ -66,7 +66,6 @@ public class AddMedicine extends JDialog {
 
 		JLabel recipelab = new JLabel("Na recept :");
 		JCheckBox recipeBox = new JCheckBox();
-		Medicine med = null;
 		if (selected != -1) {// ako je edit, onda popunimo siftu i zakljucamo
 			// i ostala polja popunimo ali ih ostavimo slobodnim za izmenu
 			med = Context.getInstance().getMedicine().get(selected);
